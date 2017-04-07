@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>viewList</name>
+	<filePath>src/main/webapp/WEB-INF/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
+	<fileName>${className}List.jsp</fileName>
+	<content><![CDATA[
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+	<#assign multiselect=false>
+
+	<!-- BEGIN PORTLET-->
+   	<div class="portlet light">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-speech"></i>
+				<a href="${r"${ctxAdmin}"}/${urlPrefix}/" class="ajaxify">${functionNameSimple}列表</a>
+            </div>
+            <div class="actions">
+	            <shiro:hasPermission name="${permissionPrefix}:edit">
+	                <a href="${r"${ctxAdmin}"}/${urlPrefix}/form" class="btn ajaxify">
+	                	<i class="fa fa-pencil"></i> ${functionNameSimple}添加 
+	                </a>
+	            </shiro:hasPermission>
+	            <a class="btn btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+            </div>
+        </div>
+        <div class="portlet-body">
+     		<!-- BEGIN FORM-->   
+			<div id="searchBox">
+				<form:form id="searchForm" modelAttribute="${className}" action="${r"${ctxAdmin}"}/${urlPrefix}/pageData" method="post" class="form-horizontal">
+					<input id="pageNo" name="pageNo" type="hidden" value="${r"${page.pageNo}"}"/>
+					<input id="pageSize" name="pageSize" type="hidden" value="${r"${page.pageSize}"}"/>
+					<input id="funcName" name="funcName" type="hidden" value="${r"${page.funcName}"}"/>
+					<input id="funcParam" name="funcParam" type="hidden" value="${r"${page.funcParam}"}"/>
+					<#assign count=0>
+					<#list table.columnList as c>
+					<#if c.isQuery?? && c.isQuery == "1">
+					<#assign count=count+1>
+					<#if count % 2 == 1>
+					<div class="row">
+					</#if>
+						<div class="form-group col-md-6">
+							<label class="control-label col-md-4">${c.comments}</label>
+							<div class="col-md-8">
+							<#if c.showType == "input" || c.showType == "textarea">
+								<form:input path="${c.javaFieldId}" htmlEscape="false"<#if c.dataLength != "0"> maxlength="${c.dataLength}"</#if> class="form-control"/>
+							<#elseif c.showType == "select">
+								<#assign multiselect=true>
+								<form:select path="${c.javaFieldId}" class="mt-multiselect btn btn-default" data-label="left" data-select-all="true" data-width="100%" data-filter="false" data-action-onchange="true">
+									<form:option value="" label="全部"/>
+									<form:options items="${"$"}{fns:getDictList('${c.dictType}')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+								</form:select>
+							<#elseif c.showType == "checkbox">
+								<#assign multiselect=true>
+								<form:select path="${c.javaFieldId}" class="mt-multiselect btn btn-default" data-label="left" data-select-all="true" data-width="100%" data-filter="false" data-action-onchange="true">
+									<form:options items="${"$"}{fns:getDictList('${c.dictType}')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+								</form:select>
+							<#elseif c.showType == "radiobox">
+								<#assign multiselect=true>
+								<form:select path="${c.javaFieldId}" class="mt-multiselect btn btn-default" data-label="left" data-select-all="true" data-width="100%" data-filter="false" data-action-onchange="true">
+									<form:option value="" label="全部"/>
+									<form:options items="${"$"}{fns:getDictList('${c.dictType}')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+								</form:select>
+							<#elseif c.showType == "dateselect" && c.queryType == "between">
+								<form:input id="begin${c.simpleJavaField?cap_first}" path="begin${c.simpleJavaField?cap_first}" type="text" readonly="true" maxlength="20" class="form-control"
+									onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/> - 
+								<form:input id="end${c.simpleJavaField?cap_first}" path="end${c.simpleJavaField?cap_first}" type="text" readonly="true" maxlength="20" class="form-control"
+									onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+							<#elseif c.showType == "dateselect">
+								<form:input id="${c.javaFieldId}" path="${c.javaFieldId}" type="text" readonly="true" maxlength="20" class="form-control"
+									onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+							<#elseif c.showType == "userselect">
+								<sys:treeselect id="${c.simpleJavaField}" name="${c.javaFieldId}" value="${"$"}{${className}.${c.javaFieldId}}" labelName="${c.javaFieldName}" labelValue="${"$"}{${className}.${c.javaFieldName}}"
+									title="用户" url="/sys/office/treeData?type=3" allowClear="true" notAllowSelectParent="true"/>
+							<#elseif c.showType == "officeselect">
+								<sys:treeselect id="${c.simpleJavaField}" name="${c.javaFieldId}" value="${"$"}{${className}.${c.javaFieldId}}" labelName="${c.javaFieldName}" labelValue="${"$"}{${className}.${c.javaFieldName}}"
+									title="部门" url="/sys/office/treeData?type=2" allowClear="true" notAllowSelectParent="true"/>
+							<#elseif c.showType == "areaselect">
+								<sys:treeselect id="${c.simpleJavaField}" name="${c.javaFieldId}" value="${"$"}{${className}.${c.javaFieldId}}" labelName="${c.javaFieldName}" labelValue="${"$"}{${className}.${c.javaFieldName}}"
+									title="区域" url="/sys/area/treeData" allowClear="true" notAllowSelectParent="true"/>
+							</#if>
+							</div>
+						</div>
+					<#if count % 2 == 0>
+					</div>
+					</#if>
+					</#if>
+					</#list>
+					<#if count % 2 == 0>
+					<div class="row">
+					</#if>
+						<div class="form-group col-md-6">
+							<div class="col-md-offset-4 col-md-8">
+								<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+							</div>
+						</div>
+					</div>
+				</form:form>
+			</div>
+			<!-- END FORM-->
+			<sys:message content="${r"${message}"}"/>
+			<!-- BEGIN TABLE-->
+			<div id="tableBox" class="dataTables_wrapper">
+				<table id="contentTable" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<#list table.columnList as c>
+								<#if c.isList?? && c.isList == "1">
+							<th>${c.comments}</th>
+								</#if>
+							</#list>
+							<shiro:hasPermission name="${permissionPrefix}:edit">
+								<th>操作</th>
+							</shiro:hasPermission>
+						</tr>
+					</thead>
+					<tbody id="pageTableList"></tbody>
+					<script type="text/template" id="pageTableTpl">
+						<tr>
+							<#assign firstListField = true>
+							<#list table.columnList as c>
+								<#if c.isList?? && c.isList == "1">
+							<td><#if firstListField><a href="${r"${ctxAdmin}"}/${urlPrefix}/form?id={{row.id}}" class="ajaxify"></#if>
+							<#if c.simpleJavaType == "Date">
+								{{row.${c.javaFieldId}}}
+							<#elseif c.showType == "select" || c.showType == "checkbox" || c.showType == "radiobox">
+								{{dict.${c.simpleJavaField}}}
+							<#elseif c.showType == "userselect" || c.showType == "officeselect" || c.showType == "areaselect">
+								{{row.${c.javaFieldName}}}
+							<#else>
+								{{row.${c.javaFieldId}}}
+							</#if>
+							<#if firstListField></a></#if></td>
+									<#assign firstListField = false> 
+								</#if>
+							</#list>
+							<shiro:hasPermission name="${permissionPrefix}:edit">
+							<td>
+			    				<a href="${r"${ctxAdmin}"}/${urlPrefix}/form?id={{row.id}}"  class="ajaxify">修改</a>
+								<a href="${r"${ctxAdmin}"}/${urlPrefix}/delete?id={{row.id}}" onclick="return confirmGetJson({mess:'确认要删除该${functionNameSimple}吗？', url:this.href, action:'delete'})">删除</a>
+							</td>
+							</shiro:hasPermission>
+						</tr>
+					</script>
+				</table>
+				<div id="pagination" class="row"></div>
+			</div>
+			<!-- END TABLE-->
+        </div>
+    </div>	
+    <!-- END PORTLET--> 
+       
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#searchForm").validate({
+				submitHandler: function(form){
+					searchPostJson({funcParam:{callback:"searchCallback"}});
+				}
+			});
+			
+		<#if multiselect == true>
+			// 初始化Multiselect控件
+			ComponentsBootstrapMultiselect.init();
+		</#if>
+		
+			// 页面打开初始化执行查询操作
+			$("#searchForm").submit();
+		});
+		
+		// 提交查询表单回调方法
+		function searchCallback(param) {
+           	var item = param.item;
+           
+   			$("#pageTableList").append(Mustache.render(param.tpl, {
+            	dict: {
+					<#list table.columnList as c>
+						<#if c.isList?? && c.isList == "1" && (c.showType == "select" || c.showType == "checkbox" || c.showType == "radiobox")>
+					${c.simpleJavaField}: getDictLabel(${"$"}{fns:toJson(fns:getDictList('${c.dictType}'))}, item.${c.simpleJavaField})
+						</#if>
+					</#list>
+				}, 
+				pid: (param.root?0:param.pid), 
+				row: item
+            }));
+		};
+		
+	</script>]]>
+	</content>
+</template>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>viewForm</name>
+	<filePath>src/main/webapp/WEB-INF/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
+	<fileName>${className}Form.jsp</fileName>
+	<content><![CDATA[
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+	<#assign multiselect=false>
+
+	<!-- BEGIN PORTLET-->
+   	<div class="portlet light">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-speech"></i>
+                <a href="${r"${ctxAdmin}"}/${urlPrefix}/form?id=${"${"+className+".id}"}" class="ajaxify">
+					${functionNameSimple}<shiro:hasPermission name="${permissionPrefix}:edit">${r"${not empty "+className+".id?'修改':'添加'}"}</shiro:hasPermission><shiro:lacksPermission name="${permissionPrefix}:edit">查看</shiro:lacksPermission>
+				</a>
+            </div>
+            <div class="actions">
+                <a href="${r"${ctxAdmin}"}/${urlPrefix}/" class="btn ajaxify">
+                    <i class="fa fa-pencil"></i> ${functionNameSimple}列表 
+                </a>
+				<a class="btn btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>                    
+            </div>
+        </div>
+        <div class="portlet-body">
+       		<!-- BEGIN FORM-->
+			<form:form id="inputForm" modelAttribute="${className}" action="${r"${ctxAdmin}"}/${urlPrefix}/save" method="post" class="form-horizontal">
+				<form:hidden path="id"/>
+				<sys:message content="${r"${message}"}"/>		
+				<#list table.columnList as c>
+					<#if c.isEdit?? && c.isEdit == "1" && (c.isNotBaseField || c.simpleJavaField == 'remarks')>
+				<div class="form-group">
+					<label class="control-label col-md-4">${c.comments}</label>
+					<div class="col-md-6 <#if c.isNull != "1">required</#if>">
+					<#if c.showType == "input">
+						<form:input path="${c.javaFieldId}" htmlEscape="false"<#if c.dataLength != "0"> maxlength="${c.dataLength}"</#if> class="form-control <#if c.isNull != "1">required</#if><#if c.javaType == "Long" || c.javaType == "Integer"> digits</#if><#if c.javaType == "Double"> number</#if>"/>
+					<#elseif c.showType == "textarea">
+						<form:textarea path="${c.javaFieldId}" htmlEscape="false" rows="4"<#if c.dataLength != "0"> maxlength="${c.dataLength}"</#if> class="form-control <#if c.isNull != "1">required</#if>"/>
+					<#elseif c.showType == "select">
+						<#assign multiselect=true>
+						<form:select path="${c.javaFieldId}" class="mt-multiselect btn btn-default <#if c.isNull != "1">required</#if>" data-label="left" data-select-all="true" data-width="100%" data-filter="false" data-action-onchange="true">
+							<form:option value="" label="请选择"/>
+							<form:options items="${"$"}{fns:getDictList('${c.dictType}')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+						</form:select>
+					<#elseif c.showType == "checkbox">
+						<#assign multiselect=true>
+						<form:select path="${c.javaFieldId}" class="mt-multiselect btn btn-default <#if c.isNull != "1">required</#if>" multiple="multiple" data-label="left" data-select-all="true" data-width="100%" data-filter="false" data-action-onchange="true">
+							<form:options items="${"$"}{fns:getDictList('${c.dictType}')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+						</form:select>
+					<#elseif c.showType == "radiobox">
+						<#assign multiselect=true>
+						<form:select path="${c.javaFieldId}" class="mt-multiselect btn btn-default <#if c.isNull != "1">required</#if>" data-label="left" data-select-all="true" data-width="100%" data-filter="false" data-action-onchange="true">
+							<form:options items="${"$"}{fns:getDictList('${c.dictType}')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+						</form:select>
+					<#elseif c.showType == "dateselect">
+						<input name="${c.javaFieldId}" type="text" readonly="readonly" maxlength="20" class="form-control <#if c.isNull != "1">required</#if>"
+							value="<fmt:formatDate value="${"$"}{${className}.${c.javaFieldId}}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+							onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					<#elseif c.showType == "userselect">
+						<sys:treeselect id="${c.simpleJavaField}" name="${c.javaFieldId}" value="${"$"}{${className}.${c.javaFieldId}}" labelName="${c.javaFieldName}" labelValue="${"$"}{${className}.${c.javaFieldName}}"
+							title="用户" url="/sys/office/treeData?type=3" cssClass="<#if c.isNull != "1">required</#if>" allowClear="true" notAllowSelectParent="true"/>
+					<#elseif c.showType == "officeselect">
+						<sys:treeselect id="${c.simpleJavaField}" name="${c.javaFieldId}" value="${"$"}{${className}.${c.javaFieldId}}" labelName="${c.javaFieldName}" labelValue="${"$"}{${className}.${c.javaFieldName}}"
+							title="部门" url="/sys/office/treeData?type=2" cssClass="<#if c.isNull != "1">required</#if>" allowClear="true" notAllowSelectParent="true"/>
+					<#elseif c.showType == "areaselect">
+						<sys:treeselect id="${c.simpleJavaField}" name="${c.javaFieldId}" value="${"$"}{${className}.${c.javaFieldId}}" labelName="${c.javaFieldName}" labelValue="${"$"}{${className}.${c.javaFieldName}}"
+							title="区域" url="/sys/area/treeData" cssClass="<#if c.isNull != "1">required</#if>" allowClear="true" notAllowSelectParent="true"/>
+					<#elseif c.showType == "fileselect">
+						<form:hidden id="${c.simpleJavaField}" path="${c.javaFieldId}" htmlEscape="false"<#if c.dataLength != "0"> maxlength="${c.dataLength}"</#if> class="form-control"/>
+						<sys:ckfinder input="${c.simpleJavaField}" type="Files" uploadPath="/${moduleName}<#if subModuleName != "">/${subModuleName}</#if>/${className}" selectMultiple="true"/>
+					</#if>
+					</div>
+				</div>
+					</#if>
+				</#list>
+				<div class="form-group">
+					<div class="col-md-offset-4 col-md-6">
+						<input id="btnCancel" class="btn" type="button" value="返回" onclick="locationHref('${r"${ctxAdmin}"}/${urlPrefix}/');"/>
+						<shiro:hasPermission name="${permissionPrefix}:edit">
+							<input id="btnSubmit" class="btn btn-primary" type="submit" value="保存"/>
+						</shiro:hasPermission>
+					</div>
+				</div>
+			</form:form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END PORTLET-->
+    
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//$("#name").focus();
+			$("#inputForm").validate({
+				submitHandler: function(form){
+					editPostHtml();
+				}
+			});
+			
+		<#if multiselect == true>
+			// 初始化Multiselect控件
+			ComponentsBootstrapMultiselect.init();
+		</#if>
+		});
+	</script>]]>
+	</content>
+</template>
