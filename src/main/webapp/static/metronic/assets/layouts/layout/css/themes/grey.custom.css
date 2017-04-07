@@ -1,0 +1,40 @@
+/* here you can put your own css to customize and override the theme */
+
+.page-header.navbar .top-menu .navbar-nav > li.navbar-menu > .menu-toggle > .title,
+ .page-header.navbar .top-menu .navbar-nav > li.navbar-menu > .menu-toggle > i {
+  color: #d6dae0; }
+
+.page-header.navbar .top-menu .navbar-nav > li.navbar-menu .menu-toggle:hover,
+ .page-header.navbar .top-menu .navbar-nav > li.navbar-menu .menu-toggle:focus {
+	background-color: #657384;
+}
+.page-header.navbar .top-menu .navbar-nav > li.active > a,
+ .page-header.navbar .top-menu .navbar-nav > li.current > a {
+      background: #31c7b2 !important; }
+
+.page-header.navbar .top-menu .navbar-nav > li.active > .menu-toggle > .title,
+ .page-header.navbar .top-menu .navbar-nav > li.current > .menu-toggle > i {
+      color: white !important; }
+     
+/*左边菜单li.heading颜色修改*/  
+.page-sidebar .page-sidebar-menu > li.heading,
+	.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.heading {
+	background:#535f6d;
+}   
+
+.page-sidebar .page-sidebar-menu > li.heading > h3, 
+	.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.heading > h3 {
+    color:#c9ced3;
+}	
+
+.page-sidebar .page-sidebar-menu > li.heading > h3 > a, 
+	.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.heading > h3 > a{
+    color:#c9ced3;
+    text-decoration: none;
+} 
+
+/*左边菜单li.sidebar-user-wrapper颜色修改*/      
+.page-sidebar .page-sidebar-menu > li.sidebar-user-wrapper > .info ,
+ .page-sidebar .page-sidebar-menu > li.sidebar-user-wrapper > .info > a {
+  color: #fff;
+}
