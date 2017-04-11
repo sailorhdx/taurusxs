@@ -69,12 +69,15 @@ public class ActProcessService extends BaseService {
 	    
 	    page.setCount(processDefinitionQuery.count());
 	    
+
+	    List<Object[]> list = new ArrayList<Object[]>();
 	    List<ProcessDefinition> processDefinitionList = processDefinitionQuery.listPage(page.getFirstResult(), page.getMaxResults());
 	    for (ProcessDefinition processDefinition : processDefinitionList) {
 	      String deploymentId = processDefinition.getDeploymentId();
 	      Deployment deployment = repositoryService.createDeploymentQuery().deploymentId(deploymentId).singleResult();
-	      page.getList().add(new Object[]{processDefinition, deployment});
+	      list.add(new Object[]{processDefinition, deployment});
 	    }
+	    page.setList(list);
 
 		return page;
 	}
