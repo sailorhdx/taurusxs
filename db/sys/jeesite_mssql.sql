@@ -12,6 +12,7 @@ DROP TABLE sys_log;
 DROP TABLE sys_mdict;
 DROP TABLE sys_role_menu;
 DROP TABLE sys_menu;
+DROP TABLE sys_menu_favorite;
 DROP TABLE sys_role;
 
 
@@ -103,6 +104,7 @@ CREATE TABLE sys_menu
 	target varchar(20),
 	icon varchar(100),
 	is_show char(1) NOT NULL,
+	is_usercenter char(1) NOT NULL,
 	permission varchar(200),
 	create_by varchar(64) NOT NULL,
 	create_date datetime NOT NULL,
@@ -113,6 +115,12 @@ CREATE TABLE sys_menu
 	PRIMARY KEY (id)
 );
 
+--用户收藏菜单表
+CREATE TABLE sys_menu_favorite (
+  user_id varchar(64) NOT NULL,
+  menu_id varchar(64) NOT NULL,
+  PRIMARY KEY (user_id,menu_id)
+);
 
 CREATE TABLE sys_office
 (

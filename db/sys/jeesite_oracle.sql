@@ -43,6 +43,7 @@ DROP TABLE sys_log CASCADE CONSTRAINTS;
 DROP TABLE sys_mdict CASCADE CONSTRAINTS;
 DROP TABLE sys_role_menu CASCADE CONSTRAINTS;
 DROP TABLE sys_menu CASCADE CONSTRAINTS;
+DROP TABLE sys_menu_favorite CASCADE CONSTRAINTS;
 DROP TABLE sys_role CASCADE CONSTRAINTS;
 
 
@@ -150,6 +151,12 @@ CREATE TABLE sys_menu
 	PRIMARY KEY (id)
 );
 
+--用户收藏菜单表
+CREATE TABLE sys_menu_favorite (
+  user_id varchar2(64) NOT NULL,
+  menu_id varchar2(64) NOT NULL,
+  PRIMARY KEY (user_id,menu_id)
+);
 
 -- 机构表
 CREATE TABLE sys_office

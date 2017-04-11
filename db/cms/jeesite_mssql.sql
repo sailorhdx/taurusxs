@@ -42,6 +42,7 @@ CREATE TABLE cms_article_data
 	copyfrom varchar(255),
 	relation varchar(255),
 	allow_comment char(1),
+	attachments text,
 	PRIMARY KEY (id)
 );
 
