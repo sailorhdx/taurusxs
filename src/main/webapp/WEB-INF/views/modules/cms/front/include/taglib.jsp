@@ -15,3 +15,8 @@
 <c:set var="ctxStaticFront" value="${ctxStatic}/modules/cms/front"/>
 <c:set var="ctxStaticTheme" value="${ctxStaticFront}/themes/${site.theme}"/>
 <c:set var="urlSuffix" value="${fns:getUrlSuffix()}"/>
+<c:set var="assetsPath" value="${ctxStatic }/metronic/assets"/>
+<c:set var="globalPluginsPath" value="${assetsPath }/global/plugins"/>
+<c:set var="globalAssetsPath" value="${assetsPath }/global"/>
+<c:set var="layoutAssetsPath" value="${assetsPath }/layouts/layout3"/>
+<c:set var="layoutGlobalAssetsPath" value="${assetsPath }/layouts/global"/>

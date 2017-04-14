@@ -1,10 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 
-    <!-- BEGIN PAGE TITLE-->
-    <h1 class="page-title">
-    </h1>
-    <!-- END PAGE TITLE-->
 	<!-- BEGIN PORTLET-->
    	<div class="portlet light">
         <div class="portlet-title">

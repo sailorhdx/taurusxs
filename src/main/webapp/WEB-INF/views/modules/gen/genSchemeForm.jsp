@@ -10,7 +10,7 @@
             </div>
             <div class="actions">
 	            <a href="${ctxAdmin}/gen/genScheme/" class="btn ajaxify">
-	            	<i class="fa fa-pencil"></i> 生成方案添加 </a>
+	            	<i class="fa fa-pencil"></i> 生成方案列表 </a>
 	            <a class="btn btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
             </div>
         </div>
@@ -41,7 +41,7 @@
 					<label class="control-label col-md-4 required">生成包路径</label>
 					<div class="col-md-6">
 						<form:input path="packageName" htmlEscape="false" maxlength="500" class="form-control required"/>
-						<span class="help-inline">建议模块包：com.thinkgem.jeesite.modules</span>
+						<span class="help-inline">建议模块包：com.taurusx.xsite.modules</span>
 					</div>
 				</div>
 				<div class="form-group">

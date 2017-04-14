@@ -7,21 +7,6 @@
 	<meta name="decorator" content="cms_default_${site.theme}"/>
 	<meta name="description" content="${article.description} ${category.description}" />
 	<meta name="keywords" content="${article.keywords} ${category.keywords}" />
-	<script type="text/javascript">
-		$(document).ready(function() {
-			if ("${category.allowComment}"=="1" && "${article.articleData.allowComment}"=="1"){
-				$("#comment").show();
-				page(1);
-			}
-		});
-		function page(n,s){
-			$.get("${ctxFront}/comment",{theme: '${site.theme}', 'category.id': '${category.id}',
-				contentId: '${article.id}', title: '${article.title}', pageNo: n, pageSize: s, date: new Date().getTime()
-			},function(data){
-				$("#comment").html(data);
-			});
-		}
-	</script>
 </head>
 <body>
 	<div class="row">
@@ -50,7 +35,7 @@
   	       </div>
   	     </div>
 	     <div class="row">
-			<div id="comment" class="hide span10">
+			<div id="comment" class="span10" style="display:none">
 				正在加载评论...
 			</div>
 	     </div>
@@ -64,5 +49,23 @@
   	    </div>
   	  </div>
    </div>
+   
+   <script type="text/javascript">
+		$(document).ready(function() {
+			console.log("aaaaaa=" + '${category.allowComment}');
+			if ("${category.allowComment}"=="1" && "${article.articleData.allowComment}"=="1"){
+				$("#comment").show();
+				page1(1);
+			}
+		});
+		function page1(n,s){
+			$.get("${ctxFront}/comment",{theme: '${site.theme}', 'category.id': '${category.id}',
+				contentId: '${article.id}', title: '${article.title}', pageNo: n, pageSize: s, date: new Date().getTime()
+			},function(data){
+				console.log(data);
+				$("#comment").html(data);
+			});
+		}
+	</script>
 </body>
 </html>

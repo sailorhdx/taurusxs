@@ -3,11 +3,10 @@
 
 	<!-- BEGIN PORTLET-->
 	<div class="portlet light">
-        <div class="portlet-title">
+        <div class="portlet-title"> 
             <div class="caption">
                 <i class="icon-speech"></i>百度地图
             </div>
-            
             <div class="actions">
                 <a id="showhide" class="btn btn-icon-only btn-default"> </a>
                 <a class="btn btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>

@@ -633,6 +633,8 @@ var AppMetronicTheme = function() {
         	}
         	
             if (typeof Cookies !== "undefined") {
+            	Cookies.set("theme", $('#themeColor').val(), {expires: 30});
+            	
             	Cookies.set("layoutOption",layoutOption, {expires: 30});
             	Cookies.set("headerOption",headerOption, {expires: 30});
             	Cookies.set("headerTopDropdownStyle",headerTopDropdownStyle, {expires: 30});

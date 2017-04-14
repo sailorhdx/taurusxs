@@ -69,7 +69,7 @@
 							</td>
 							<shiro:hasPermission name="test:testTree:edit"><td>
 				   				<a href="${ctxAdmin}/test/testTree/form?id={{row.id}}" class="ajaxify">修改</a>
-								a href="${ctxAdmin}/test/testTree/delete?id={{row.id}}" onclick="return confirmGetJson({mess:'确认要删除该树结构及所有子树结构吗？', url:this.href, action:'delete'})">删除</a>
+								<a href="${ctxAdmin}/test/testTree/delete?id={{row.id}}" onclick="return confirmGetJson({mess:'确认要删除该树结构及所有子树结构吗？', url:this.href, action:'delete'})">删除</a>
 								<a href="${ctxAdmin}/test/testTree/form?parent.id={{row.id}}" class="ajaxify">添加下级树结构</a> 
 							</td></shiro:hasPermission>
 						</tr>

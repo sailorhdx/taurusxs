@@ -120,6 +120,7 @@
 		// 提交查询表单回调方法
 		function searchCallback(param) {
            	var item = param.item;
+           	console.log(item);
    			$("#pageTableList").append(Mustache.render(param.tpl, {
                	row: item, 
                	dict: {
@@ -129,7 +130,7 @@
                		content: abbr(item.content,40),
                		reContent: abbr(item.reContent,40),
                	},
-               	reUserName: item.reUser.name,
+               	reUserName: (isNullOrEmpty(item.reUser)? "": item.reUser.name),
                	delFlag: {
                    	eq0: (item.delFlag == "0"? item.delFlag: ""),
                    	eq1: (item.delFlag == "1"? item.delFlag: ""),

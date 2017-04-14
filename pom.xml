@@ -612,7 +612,7 @@
 		
 		<!-- 自定义jar依赖包
 		<dependency>
-			<groupId>com.thinkgem.jeesite</groupId>
+			<groupId>com.taurusx.xsite</groupId>
 			<artifactId>test-core</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
@@ -710,10 +710,10 @@
 						</goals>
 						<configuration>
 							<classesDirectory>${project.outputDirectory}</classesDirectory>
-							<finalName>jeesite</finalName>
+							<finalName>taurusxs</finalName>
 							<outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/lib</outputDirectory>
 							<includes>
-					        	<include>com/thinkgem/jeesite/**</include>
+					        	<include>com/taurusx/xsite/**</include>
 					       	</includes>
 						</configuration>
 					</execution>
@@ -736,9 +736,9 @@
 				<configuration>
 			        <obfuscate>true</obfuscate>
 			    	<options>
-                        <option>-injars ${project.build.directory}/${project.artifactId}/WEB-INF/lib/jeesite.jar</option>
+                        <option>-injars ${project.build.directory}/${project.artifactId}/WEB-INF/lib/taurusxs.jar</option>
                     </options>
-                    <outjar>${project.artifactId}/WEB-INF/lib/jeesite_out.jar</outjar>
+                    <outjar>${project.artifactId}/WEB-INF/lib/taurusxs_out.jar</outjar>
                     <outputDirectory>${project.build.directory}</outputDirectory>
 			        <proguardInclude>${basedir}/proguard.cfg</proguardInclude>
 					<source>${jdk.version}</source>
@@ -938,12 +938,12 @@
 								<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" 
 									onerror="continue" encoding="${project.build.sourceEncoding}">
 									<classpath refid="maven.test.classpath" />
-									<transaction src="db/sys/jeesite_${jdbc.type}.sql"/>
-									<transaction src="db/cms/jeesite_${jdbc.type}.sql"/>
-									<transaction src="db/oa/jeesite_${jdbc.type}.sql"/>
-									<transaction src="db/gen/jeesite_${jdbc.type}.sql"/>
+									<transaction src="db/sys/taurusxs_${jdbc.type}.sql"/>
+									<transaction src="db/cms/taurusxs_${jdbc.type}.sql"/>
+									<transaction src="db/oa/taurusxs_${jdbc.type}.sql"/>
+									<transaction src="db/gen/taurusxs_${jdbc.type}.sql"/>
 									<transaction src="db/gen/example_${jdbc.type}.sql"/>
-									<transaction src="db/test/jeesite_${jdbc.type}.sql"/>
+									<transaction src="db/test/taurusxs_${jdbc.type}.sql"/>
 									<transaction src="db/act/drop/activiti.${jdbc.type}.drop.engine.sql"/>
 									<transaction src="db/act/drop/activiti.${jdbc.type}.drop.history.sql"/>
 									<transaction src="db/act/drop/activiti.${jdbc.type}.drop.identity.sql"/>
@@ -966,8 +966,8 @@
 										<property name="datatypeFactory" value="${dbunit.datatype}" />
 									</dbconfig>
 									<classpath refid="maven.test.classpath" />
-									<operation type="INSERT" src="db/sys/jeesite_data.xls" format="xls" transaction="true"/>
-									<operation type="INSERT" src="db/cms/jeesite_data.xls" format="xls" transaction="true"/>
+									<operation type="INSERT" src="db/sys/taurusxs_data.xls" format="xls" transaction="true"/>
+									<operation type="INSERT" src="db/cms/taurusxs_data.xls" format="xls" transaction="true"/>
 									
 								</dbunit>
 								

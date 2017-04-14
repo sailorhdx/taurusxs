@@ -8,7 +8,6 @@
                 <i class="icon-speech"></i>
                 <a href="${ctxAdmin}/sys/user/modifyPwd" class="ajaxify">修改密码</a>
             </div>
-            
             <div class="actions">
                 <a href="${ctxAdmin}/sys/user/info" class="btn btn-outline ajaxify">
                     <i class="fa fa-pencil"></i> 个人信息 

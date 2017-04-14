@@ -1,8 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/modules/cms/front/include/taglib.jsp"%>
-<link href="${ctxStatic}/jquery-validation/1.11.1/jquery.validate.min.css" type="text/css" rel="stylesheet" />
-<script src="${ctxStatic}/jquery-validation/1.11.1/jquery.validate.min.js" type="text/javascript"></script>
-<script src="${ctxStatic}/jquery-validation/1.11.1/jquery.validate.method.min.js" type="text/javascript"></script>
+
 <style type="text/css">.reply{border:1px solid #ddd;background:#fefefe;margin:10px;}</style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -62,7 +60,9 @@
 		<li>暂时还没有人评论！</li>
 	</c:if>
 </ul>
-<div class="pagination">${page}</div>
+<table>
+<div class="row">${page}</div>
+</table>
 <h5>我要评论</h5>
 <div id="commentForm0"></div>
 <script id="commentFormTpl" type="text/javascript"><!--/*-->

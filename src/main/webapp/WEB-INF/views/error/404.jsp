@@ -8,7 +8,7 @@ if (Servlets.isAjaxRequest(request)) {
 //输出异常信息页面
 else {
 %>
-<%@page import="com.thinkgem.jeesite.common.web.Servlets"%>
+<%@page import="com.taurusx.xsite.common.web.Servlets"%>
 <%@page contentType="text/html;charset=UTF-8" isErrorPage="true"%>
 <%@include file="/WEB-INF/views/include/taglib.jsp"%>
 <!DOCTYPE html>

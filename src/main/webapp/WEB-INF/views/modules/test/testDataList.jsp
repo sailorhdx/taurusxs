@@ -131,7 +131,7 @@
 							<shiro:hasPermission name="test:testData:edit">
 							<td>
 			    				<a href="${ctxAdmin}/test/testData/form?id={{row.id}}"  class="ajaxify">修改</a>
-								<a href="${ctxAdmin}/test/testData/delete?id={{row.id}}" onclick="return confirmGetJson({mess:'确认要删除该单表吗？', url:this.href, action='delete'})">删除</a>
+								<a href="${ctxAdmin}/test/testData/delete?id={{row.id}}" onclick="return confirmGetJson({mess:'确认要删除该单表吗？', url:this.href, action:'delete'})">删除</a>
 							</td>
 							</shiro:hasPermission>
 						</tr>
