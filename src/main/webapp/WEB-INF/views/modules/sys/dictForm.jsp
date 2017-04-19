@@ -21,6 +21,13 @@
 			<form:hidden path="id"/>
 			<sys:message content="${message}"/>
 				<div class="form-group">
+					<label class="control-label col-md-4">上级数据</label>
+					<div class="col-md-6">
+						<sys:treeselect id="dict" name="parent.id" value="${dict.parent.id}" labelName="parent.label" labelValue="${dict.parent.label}"
+							title="字典数据" url="/sys/dict/treeData" cssClass="" allowClear="true"/>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="control-label col-md-4 required">键值</label>
 					<div class="col-md-6">
 						<form:input path="value" htmlEscape="false" maxlength="50" class="form-control required"/>

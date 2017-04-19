@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 
+	<%@include file="/WEB-INF/views/include/treetable.jsp" %>
+	
 	<!-- BEGIN PORTLET-->
    	<div class="portlet light">
         <div class="portlet-title">
@@ -49,7 +51,7 @@
        		<sys:message content="${message}"/>
        		<!-- BEGIN TABLE-->
        		<div id="tableBox" class="dataTables_wrapper">
-		        <table id="contentTable" class="table table-striped table-bordered">
+		        <table id="dataTable" class="table table-striped table-bordered">
 					<thead>
 						<tr>
 							<th>键值</th>
@@ -62,12 +64,12 @@
 							</shiro:hasPermission>
 						</tr>
 					</thead>
-					<tbody id="pageTableList"></tbody>
-					<script type="text/template" id="pageTableTpl">
-						<tr>
+					<tbody id="dataTableList"></tbody>
+					<script type="text/template" id="dataTableTpl">
+						<tr id="{{row.id}}" pId="{{pid}}">
 							<td>{{row.value}}</td>
 							<td><a href="${ctxAdmin}/sys/dict/form?id={{row.id}}" class="ajaxify">{{row.label}}</a></td>
-							<td><a href="javascript:" onclick="$('#type').val('{{row.type}}');$('#searchForm').submit();return false;">{{row.type}}</a></td>
+							<td><a href="javascript:" onclick="$('#type').val('{{row.type}}'); $('#type').change();$('#searchForm').submit();return false;">{{row.type}}</a></td>
 							<td>{{row.description}}</td>
 							<td>{{row.sort}}</td>
 							<shiro:hasPermission name="sys:dict:edit">
@@ -78,8 +80,11 @@
 	                            <a href="${ctxAdmin}/sys/dict/pageDelete?id={{row.id}}&type={{row.type}}" onclick="return confirmGetJson({mess:'确认要删除该字典吗？', url:this.href});" class="btn btn-outline dark btn-xs">
 	                               	<i class="fa fa-trash-o"></i>删除
 	                            </a>
-	                            <a href="${ctxAdmin}/sys/dict/form?type={{row.type}}&sort={{nextsort}}{{#row.description}}&description={{row.description}}{{/row.description}}" class="btn btn-outline red btn-xs ajaxify">
+	                            <a href="${ctxAdmin}/sys/dict/form?type={{row.type}}&sort={{nextsort}}{{#row.description}}&description={{row.description}}{{/row.description}}{{#pid0}}&parent.id={{pid}}{{/pid0}}" class="btn btn-outline red btn-xs ajaxify">
 	                               	<i class="fa fa-share"></i>添加键值
+	                            </a>
+								<a href="${ctxAdmin}/sys/dict/form?type={{row.type}}&sort={{nextsort}}{{#row.description}}&description={{row.description}}{{/row.description}}&parent.id={{row.id}}" class="btn btn-outline red btn-xs ajaxify">
+	                               	<i class="fa fa-list"></i>添加子项
 	                            </a>
 							</td>
 							</shiro:hasPermission>
@@ -99,7 +104,16 @@
 			
 			$("#searchForm").validate({
 				submitHandler: function(form){
-					searchPostJson({pageSize:10,funcParam:{callback:"searchCallback"}});
+					console.log("type=" + $("#type").val() + ", isNullOrEmpty = " + isNullOrEmpty($("#type").val()));
+					if (isNullOrEmpty($("#type").val())) {
+						$("#searchForm").attr("action","${ctxAdmin}/sys/dict/pageData");
+						searchPostJson({pageSize:10,funcParam:{callback:"searchCallback", table:"#dataTable", tableTpl:"#dataTableTpl", tableList:"#dataTableList"}});
+					} else {
+						$("#pagination").empty();
+						$("#searchForm").attr("action","${ctxAdmin}/sys/dict/listData");
+						searchPostJson({form:"#searchForm", callback:'searchCallback', tableType:"tree", table:"#dataTable", tableTpl:"#dataTableTpl", tableList:"#dataTableList"});	
+					}
+					
 				}
 			});
 			
@@ -112,8 +126,10 @@
 		
 		function searchCallback(param) {
             var item = param.item;
-   			$("#pageTableList").append(Mustache.render(param.tpl, {
+   			$("#dataTableList").append(Mustache.render(param.tpl, {
                	row: item,
+               	pid: (param.root?0:param.pid),
+               	pid0: (param.root?'':param.pid),
                	nextsort: item.sort + 10
             }));
 		};

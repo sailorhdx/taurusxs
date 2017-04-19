@@ -48,6 +48,7 @@ CREATE TABLE sys_dict
 	description varchar(100) NOT NULL COMMENT '描述',
 	sort decimal(10,0) NOT NULL COMMENT '排序（升序）',
 	parent_id varchar(64) DEFAULT '0' COMMENT '父级编号',
+	parent_ids varchar(2000) DEFAULT '0,' COMMENT '所有父级编号',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
 	create_date datetime NOT NULL COMMENT '创建时间',
 	update_by varchar(64) NOT NULL COMMENT '更新者',

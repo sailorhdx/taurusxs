@@ -1279,7 +1279,7 @@ var ajaxPostJson = function(param) {
 		}
 		var treeTableTpl = "#treeTableTpl";
 		if (!isNullOrEmpty(param.tableTpl)) {
-			pageTableTpl = param.tableTpl;
+			treeTableTpl = param.tableTpl;
 		}
 		var treeTableList = "#treeTableList";
 		if (!isNullOrEmpty(param.tableList)) {
@@ -1378,15 +1378,15 @@ var ajaxPostJson = function(param) {
 		if (!isNullOrEmpty(param.funcParam)) {
 
 			if (!isNullOrEmpty(param.funcParam.tableTpl)) {
-				pageTableTpl = param.tableTpl;
+				pageTableTpl = param.funcParam.tableTpl;
 			}
 			
 			if (!isNullOrEmpty(param.funcParam.tableList)) {
-				pageTableList = param.tableList;
+				pageTableList = param.funcParam.tableList;
 			}
 			
 			if (!isNullOrEmpty(param.funcParam.pagination)) {
-				pagination = param.pagination;
+				pagination = param.funcParam.pagination;
 			}
 			
 			if (!isNullOrEmpty(param.funcParam.callback)) {

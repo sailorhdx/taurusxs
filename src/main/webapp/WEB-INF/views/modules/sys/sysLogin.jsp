@@ -14,10 +14,7 @@
         <c:set var="layoutStyleOption" value="${empty cookie.layoutStyleOption.value ? 'square' : cookie.layoutStyleOption.value}"/>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,IE=8,IE=9,IE=10">
-		<meta content="width=device-width, initial-scale=1" name="viewport" />
-		<meta content="DouBao" name="author" />
 		
-		<meta name="renderer" content="webkit">
 		<meta http-equiv="Expires" content="0">
 		<meta http-equiv="Cache-Control" content="no-cache">
 		<meta http-equiv="Cache-Control" content="no-store">

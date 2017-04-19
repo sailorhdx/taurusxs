@@ -81,6 +81,7 @@ CREATE TABLE sys_dict
 	description nvarchar2(100) NOT NULL,
 	sort number(10,0) NOT NULL,
 	parent_id varchar2(64) DEFAULT '0',
+	parent_ids varchar2(2000) DEFAULT '0,',
 	create_by varchar2(64) NOT NULL,
 	create_date timestamp NOT NULL,
 	update_by varchar2(64) NOT NULL,

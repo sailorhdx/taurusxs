@@ -64,10 +64,17 @@ public class DictController extends BaseController {
 	    Page<Dict> page = dictService.findPage(new Page<Dict>(request, response), dict); 
      return page;
     }
-
+	
 	@RequiresPermissions("sys:dict:view")
 	@RequestMapping(value = "form")
 	public String form(Dict dict, Model model) {
+	    if (dict.getParent()==null||dict.getParent().getId()==null){
+	        Dict parent = new Dict("0");
+	        parent.setParentIds("0,");
+	        dict.setParent(parent);
+        } else {
+            dict.setParent(dictService.get(dict.getParent().getId()));
+        }
 		model.addAttribute("dict", dict);
 		return "modules/sys/dictForm";
 	}
