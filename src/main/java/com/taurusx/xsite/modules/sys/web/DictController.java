@@ -1,6 +1,7 @@
 
 package com.taurusx.xsite.modules.sys.web;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -49,9 +50,14 @@ public class DictController extends BaseController {
 	
 	@RequiresPermissions("sys:dict:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Dict dict, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String list(Dict dict, HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(required=false) String mode) {
 		List<String> typeList = dictService.findTypeList();
 		model.addAttribute("typeList", typeList);
+		
+		if (StringUtils.isBlank(mode)) {
+		    mode = "0";
+		}
+		model.addAttribute("mode", mode);
         //Page<Dict> page = dictService.findPage(new Page<Dict>(request, response), dict); 
         //model.addAttribute("page", page);
 		return "modules/sys/dictList";
@@ -67,7 +73,7 @@ public class DictController extends BaseController {
 	
 	@RequiresPermissions("sys:dict:view")
 	@RequestMapping(value = "form")
-	public String form(Dict dict, Model model) {
+	public String form(Dict dict, Model model, @RequestParam(required=false) String mode) {
 	    if (dict.getParent()==null||dict.getParent().getId()==null){
 	        Dict parent = new Dict("0");
 	        parent.setParentIds("0,");
@@ -76,34 +82,48 @@ public class DictController extends BaseController {
             dict.setParent(dictService.get(dict.getParent().getId()));
         }
 		model.addAttribute("dict", dict);
+		model.addAttribute("mode", mode);
 		return "modules/sys/dictForm";
 	}
 
 	@RequiresPermissions("sys:dict:edit")
 	@RequestMapping(value = "save")//@Valid 
-	public String save(Dict dict, Model model, RedirectAttributes redirectAttributes) {
+	public String save(Dict dict, Model model, RedirectAttributes redirectAttributes, @RequestParam(required=false) String mode) {
+	    String description = dict.getDescription();
+        try {
+            description = java.net.URLEncoder.encode(description,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + adminPath + "/sys/dict/?repage&type="+dict.getType();
+			model.addAttribute("dict", dict);
+			return "redirect:" + adminPath + "/sys/dict/?repage&mode=" + mode + "&type="+dict.getType() + "&description=" + dict.getDescription();
 		}
 		if (!beanValidator(model, dict)){
-			return form(dict, model);
+			return form(dict, model, mode);
 		}
 		dictService.save(dict);
-		addMessage(redirectAttributes, "保存字典'" + dict.getLabel() + "'成功");
-		return "redirect:" + adminPath + "/sys/dict/?repage&type="+dict.getType();
+		addMessage(redirectAttributes, "保存" + dict.getDescription() + " '" + dict.getLabel() + "' 成功");
+		return "redirect:" + adminPath + "/sys/dict/?repage&mode=" + mode + "&type=" + dict.getType() + "&description=" + description;
 	}
 	
 	@RequiresPermissions("sys:dict:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Dict dict, RedirectAttributes redirectAttributes) {
+	public String delete(Dict dict, RedirectAttributes redirectAttributes, @RequestParam(required=false) String mode) {
+	    String description = dict.getDescription();
+        try {
+            description = java.net.URLEncoder.encode(description,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + adminPath + "/sys/dict/?repage";
+			return "redirect:" + adminPath + "/sys/dict/?repage&mode=" + mode + "&type="+dict.getType() + "&description=" + description;
 		}
 		dictService.delete(dict);
-		addMessage(redirectAttributes, "删除字典成功");
-		return "redirect:" + adminPath + "/sys/dict/?repage&type="+dict.getType();
+		addMessage(redirectAttributes, "删除" + dict.getDescription() + "成功");
+		return "redirect:" + adminPath + "/sys/dict/?repage&mode=" + mode + "&type="+dict.getType() + "&description=" + description;
 	}
 	
 	@ResponseBody
@@ -115,7 +135,7 @@ public class DictController extends BaseController {
             return redirectAttributes.getFlashAttributes();
         }
         dictService.delete(dict);
-        addMessage(redirectAttributes, "删除字典成功");
+        addMessage(redirectAttributes, "删除" + dict.getDescription() + "成功");
         return redirectAttributes.getFlashAttributes();
 	}
 	   

@@ -8,12 +8,12 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class="icon-speech"></i>
-				字典列表
+				${mode eq '1' && not empty dict.description ? dict.description : '字典'}列表
             </div>
             <div class="actions">
 	            <shiro:hasPermission name="sys:dict:edit">
-	                <a href="${ctxAdmin}/sys/dict/form?sort=10" class="btn ajaxify">
-	                    <i class="fa fa-pencil"></i> 字典添加 
+	                <a href="${ctxAdmin}/sys/dict/form?sort=10&mode=${mode}&type=${mode eq '1'? dict.type : ''}&description=${mode eq '1'? dict.description : ''}" class="btn ajaxify">
+	                    <i class="fa fa-pencil"></i> ${mode eq '1' && not empty dict.description ? dict.description : '字典'}添加
 	                </a>
 	            </shiro:hasPermission>
 	            <a class="btn btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
@@ -21,8 +21,9 @@
         </div>
         <div class="portlet-body">
        		<!-- BEGIN FORM-->
-			<div id="searchBox">       		
+			<div id="searchBox" ${mode eq "1" ? "style='display:none'": ""}>       		
 	       		<form:form id="searchForm" modelAttribute="dict" action="${ctxAdmin}/sys/dict/pageData" method="post" class="form-horizontal">
+	       			<input id="mode" name="mode" type="hidden" value="${mode}"/>
 					<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 					<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 					<input id="funcName" name="funcName" type="hidden" value="${page.funcName}"/>
@@ -56,8 +57,8 @@
 						<tr>
 							<th>键值</th>
 							<th>标签</th>
-							<th>类型</th>
-							<th>描述</th>
+							<th ${mode eq "1" ? "style='display:none'": ""}>类型</th>
+							<th ${mode eq "1" ? "style='display:none'": ""}">描述</th>
 							<th>排序</th>
 							<shiro:hasPermission name="sys:dict:edit">
 								<th>操作</th>
@@ -68,22 +69,22 @@
 					<script type="text/template" id="dataTableTpl">
 						<tr id="{{row.id}}" pId="{{pid}}">
 							<td>{{row.value}}</td>
-							<td><a href="${ctxAdmin}/sys/dict/form?id={{row.id}}" class="ajaxify">{{row.label}}</a></td>
-							<td><a href="javascript:" onclick="$('#type').val('{{row.type}}'); $('#type').change();$('#searchForm').submit();return false;">{{row.type}}</a></td>
-							<td>{{row.description}}</td>
+							<td><a href="${ctxAdmin}/sys/dict/form?id={{row.id}}&mode=${mode}" class="ajaxify">{{row.label}}</a></td>
+							<td {{#display}}style="display:none{{/display}}"><a href="javascript:" onclick="$('#type').val('{{row.type}}'); $('#type').change();$('#searchForm').submit();return false;">{{row.type}}</a></td>
+							<td {{#display}}style="display:none{{/display}}">{{row.description}}</td>
 							<td>{{row.sort}}</td>
 							<shiro:hasPermission name="sys:dict:edit">
 							<td nowrap>
-			    				<a href="${ctxAdmin}/sys/dict/form?id={{row.id}}" class="btn btn-outline green btn-xs ajaxify">
+			    				<a href="${ctxAdmin}/sys/dict/form?id={{row.id}}&mode=${mode}" class="btn btn-outline green btn-xs ajaxify">
 	                              	<i class="fa fa-edit"></i>修改
 	                            </a>
-	                            <a href="${ctxAdmin}/sys/dict/pageDelete?id={{row.id}}&type={{row.type}}" onclick="return confirmGetJson({mess:'确认要删除该字典吗？', url:this.href});" class="btn btn-outline dark btn-xs">
+	                            <a href="${ctxAdmin}/sys/dict/pageDelete?id={{row.id}}&type={{row.type}}&mode=${mode}" onclick="return confirmGetJson({mess:'确认要删除该{{#display}}{{row.description}}{{/display}}{{^display}}字典{{/display}}吗？', url:this.href});" class="btn btn-outline dark btn-xs">
 	                               	<i class="fa fa-trash-o"></i>删除
 	                            </a>
-	                            <a href="${ctxAdmin}/sys/dict/form?type={{row.type}}&sort={{nextsort}}{{#row.description}}&description={{row.description}}{{/row.description}}{{#pid0}}&parent.id={{pid}}{{/pid0}}" class="btn btn-outline red btn-xs ajaxify">
+	                            <a href="${ctxAdmin}/sys/dict/form?type={{row.type}}&sort={{nextsort}}{{#row.description}}&description={{row.description}}{{/row.description}}{{#pid0}}&parent.id={{pid}}{{/pid0}}&mode=${mode}" class="btn btn-outline red btn-xs ajaxify">
 	                               	<i class="fa fa-share"></i>添加键值
 	                            </a>
-								<a href="${ctxAdmin}/sys/dict/form?type={{row.type}}&sort={{nextsort}}{{#row.description}}&description={{row.description}}{{/row.description}}&parent.id={{row.id}}" class="btn btn-outline red btn-xs ajaxify">
+								<a href="${ctxAdmin}/sys/dict/form?type={{row.type}}&sort={{nextsort}}{{#row.description}}&description={{row.description}}{{/row.description}}&parent.id={{row.id}}&mode=${mode}" class="btn btn-outline red btn-xs ajaxify">
 	                               	<i class="fa fa-list"></i>添加子项
 	                            </a>
 							</td>
@@ -104,7 +105,6 @@
 			
 			$("#searchForm").validate({
 				submitHandler: function(form){
-					console.log("type=" + $("#type").val() + ", isNullOrEmpty = " + isNullOrEmpty($("#type").val()));
 					if (isNullOrEmpty($("#type").val())) {
 						$("#searchForm").attr("action","${ctxAdmin}/sys/dict/pageData");
 						searchPostJson({pageSize:10,funcParam:{callback:"searchCallback", table:"#dataTable", tableTpl:"#dataTableTpl", tableList:"#dataTableList"}});
@@ -126,11 +126,13 @@
 		
 		function searchCallback(param) {
             var item = param.item;
+            var a = ${mode eq '1'};
    			$("#dataTableList").append(Mustache.render(param.tpl, {
                	row: item,
                	pid: (param.root?0:param.pid),
                	pid0: (param.root?'':param.pid),
-               	nextsort: item.sort + 10
+               	nextsort: item.sort + 10,
+               	display: (a ? 'none': '')
             }));
 		};
 		
