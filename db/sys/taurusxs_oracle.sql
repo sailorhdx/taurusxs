@@ -45,6 +45,7 @@ DROP TABLE sys_role_menu CASCADE CONSTRAINTS;
 DROP TABLE sys_menu CASCADE CONSTRAINTS;
 DROP TABLE sys_menu_favorite CASCADE CONSTRAINTS;
 DROP TABLE sys_role CASCADE CONSTRAINTS;
+DROP TABLE sys_cert CASCADE CONSTRAINTS;
 
 
 
@@ -269,7 +270,31 @@ CREATE TABLE sys_user_role
 	PRIMARY KEY (user_id, role_id)
 );
 
-
+CREATE TABLE sys_cert (
+  id varchar2(64) NOT NULL,
+  owner_id varchar2(64),
+  type varchar2(64),
+  no varchar2(64),
+  issued_date timestamp,
+  issued_by varchar2(64),
+  valid_date timestamp,
+  ext_col1 varchar2(128),
+  ext_col2 varchar2(128),
+  ext_col3 varchar2(128),
+  ext_col4 varchar2(128),
+  ext_col5 varchar2(128),
+  ext_col6 varchar2(128),
+  ext_col7 varchar2(128),
+  ext_col8 varchar2(128),
+  ext_col9 varchar2(128),
+  ext_col10 varchar2(128),
+  create_by varchar2(64) NOT NULL,
+  create_date timestamp NOT NULL,
+  update_by varchar2(64) NOT NULL,
+  update_date timestamp NOT NULL,
+  remarks varchar2(512),
+  PRIMARY KEY (id)
+);
 
 /* Create Indexes */
 

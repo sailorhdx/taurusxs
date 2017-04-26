@@ -14,8 +14,7 @@ DROP TABLE IF EXISTS sys_role_menu;
 DROP TABLE IF EXISTS sys_menu;
 DROP TABLE IF EXISTS sys_menu_favorite;
 DROP TABLE IF EXISTS sys_role;
-
-
+DROP TABLE IF EXISTS sys_cert;
 
 
 /* Create Tables */
@@ -227,6 +226,31 @@ CREATE TABLE sys_user_role
 ) COMMENT = '用户-角色';
 
 
+CREATE TABLE `sys_cert` (
+  `id` varchar(64) NOT NULL COMMENT '编号，自动生成',
+  `owner_id` varchar(64) COMMENT '所有者ID',
+  `type` varchar(64) COMMENT '证件类型',
+  `no` varchar(64) COMMENT '证号',
+  `issued_date` datetime COMMENT '核发日期',
+  `issued_by` varchar(64) COMMENT '核发机关',
+  `valid_date` datetime COMMENT '有效期',
+  `ext_col1` varchar(128) COMMENT '扩展信息1',
+  `ext_col2` varchar(128) COMMENT '扩展信息2',
+  `ext_col3` varchar(128) COMMENT '扩展信息3',
+  `ext_col4` varchar(128) COMMENT '扩展信息4',
+  `ext_col5` varchar(128) COMMENT '扩展信息5',
+  `ext_col6` varchar(128) COMMENT '扩展信息6',
+  `ext_col7` varchar(128) COMMENT '扩展信息7',
+  `ext_col8` varchar(128) COMMENT '扩展信息8',
+  `ext_col9` varchar(128) COMMENT '扩展信息9',
+  `ext_col10` varchar(128) COMMENT '扩展信息10',
+  `create_by` varchar(64) NOT NULL COMMENT '创建者',
+  `create_date` datetime NOT NULL COMMENT '创建时间',
+  `update_by` varchar(64) NOT NULL COMMENT '更新者',
+  `update_date` datetime NOT NULL COMMENT '更新时间',
+  `remarks` varchar(512) COMMENT '备注',
+  PRIMARY KEY (`id`)
+) COMMENT='证件信息表';
 
 /* Create Indexes */
 

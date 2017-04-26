@@ -14,7 +14,7 @@ DROP TABLE sys_role_menu;
 DROP TABLE sys_menu;
 DROP TABLE sys_menu_favorite;
 DROP TABLE sys_role;
-
+DROP TABLE sys_cert;
 
 
 
@@ -227,7 +227,31 @@ CREATE TABLE sys_user_role
 	PRIMARY KEY (user_id, role_id)
 );
 
-
+CREATE TABLE sys_cert (
+  id varchar(64) NOT NULL,
+  owner_id varchar(64),
+  type varchar(64),
+  no varchar(64),
+  issued_date datetime,
+  issued_by varchar(64),
+  valid_date datetime,
+  ext_col1 varchar(128),
+  ext_col2 varchar(128),
+  ext_col3 varchar(128),
+  ext_col4 varchar(128),
+  ext_col5 varchar(128),
+  ext_col6 varchar(128),
+  ext_col7 varchar(128),
+  ext_col8 varchar(128),
+  ext_col9 varchar(128),
+  ext_col10 varchar(128),
+  create_by varchar(64) NOT NULL,
+  create_date datetime NOT NULL,
+  update_by varchar(64) NOT NULL,
+  update_date datetime NOT NULL,
+  remarks varchar(512),
+  PRIMARY KEY (id)
+);
 
 /* Create Indexes */
 
