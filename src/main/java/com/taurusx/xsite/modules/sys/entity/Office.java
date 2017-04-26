@@ -21,17 +21,21 @@ public class Office extends TreeEntity<Office> {
 //	private Office parent;	// 父级编号
 //	private String parentIds; // 所有父级编号
 	private Area area;		// 归属区域
-	private String code; 	// 机构编码
 //	private String name; 	// 机构名称
 //	private Integer sort;		// 排序
+    private String abbreviation; // 机构简称
+    private String code;    // 机构编码
 	private String type; 	// 机构类型（1：公司；2：部门；3：小组）
 	private String grade; 	// 机构等级（1：一级；2：二级；3：三级；4：四级）
 	private String address; // 联系地址
 	private String zipCode; // 邮政编码
+    private String phone;   // 电话
+    private String fax;     // 传真
+    private String email;   // 邮箱
 	private String master; 	// 负责人
-	private String phone; 	// 电话
-	private String fax; 	// 传真
-	private String email; 	// 邮箱
+	private String masterPhone; // 负责人电话
+	private String contact; // 联系人
+	private String contactPhone; // 联系人电话
 	private String useable;//是否可用
 	private User primaryPerson;//主负责人
 	private User deputyPerson;//副负责人
@@ -125,6 +129,15 @@ public class Office extends TreeEntity<Office> {
 //		this.sort = sort;
 //	}
 	
+	@Length(min=0, max=100)
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
+    }
+    
 	@Length(min=1, max=1)
 	public String getType() {
 		return type;
@@ -171,6 +184,33 @@ public class Office extends TreeEntity<Office> {
 	}
 
 	@Length(min=0, max=200)
+    public String getMasterPhone() {
+        return masterPhone;
+    }
+
+    public void setMasterPhone(String masterPhone) {
+        this.masterPhone = masterPhone;
+    }
+
+    @Length(min=0, max=100)
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    @Length(min=0, max=200)
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
+    
+	@Length(min=0, max=200)
 	public String getPhone() {
 		return phone;
 	}
@@ -214,4 +254,5 @@ public class Office extends TreeEntity<Office> {
 	public String toString() {
 		return name;
 	}
+
 }
