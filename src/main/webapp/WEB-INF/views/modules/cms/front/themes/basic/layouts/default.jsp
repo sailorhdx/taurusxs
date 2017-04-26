@@ -45,8 +45,8 @@
 		<link href="${layoutAssetsPath}/css/layout.css" rel="stylesheet" type="text/css" />
 		<link href="${layoutAssetsPath}/css/custom.css" rel="stylesheet" type="text/css" />
 		<link href="${layoutAssetsPath}/css/themes/${themeColor}.css" rel="stylesheet" type="text/css" id="style_color" />
-		<!--<link href="${layoutAssetsPath}/css/themes/${themeColor}.custom.css" rel="stylesheet" type="text/css" id="custom_color"/>
-		 END THEME LAYOUT STYLES -->
+		<link href="${layoutAssetsPath}/css/themes/${themeColor}.custom.css" rel="stylesheet" type="text/css" id="custom_color"/>
+		<!-- END THEME LAYOUT STYLES -->
 		<!-- BEGIN CORE PLUGINS -->
 		<script src="${globalPluginsPath}/jquery.js" type="text/javascript"></script>
 		<script src="${globalPluginsPath}/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
