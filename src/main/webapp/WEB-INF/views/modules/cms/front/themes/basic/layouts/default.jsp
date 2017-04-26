@@ -31,6 +31,9 @@
 		<!-- END GLOBAL MANDATORY STYLES -->
 		
         <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link href="${globalPluginsPath}/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+        <link href="${globalPluginsPath}/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+        
         <!-- END PAGE LEVEL PLUGINS -->
         			
 		<!-- BEGIN THEME GLOBAL STYLES -->
