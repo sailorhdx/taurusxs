@@ -298,9 +298,13 @@ public class Page<T> {
 		StringBuilder pagination = new StringBuilder();
 		//pagination.append("<div class=\"row\">");
 		pagination.append("    <div class=\"col-md-5 col-sm-5\">");
-        pagination.append("        <div class=\"dataTables_info\" role=\"status\" aria-live=\"polite\">");
-        pagination.append("            Showing " + ((pageNo - 1) * pageSize + 1)  + " to " + ((pageNo - 1) * pageSize + list.size()) /*(pageNo * pageSize)*/ + " of " + count + " records" + (message!=null?message:""));
-        pagination.append("        </div>");
+        pagination.append("        <div class=\"dataTables_info\" role=\"status\" aria-live=\"polite\"><label>");
+        pagination.append("            第 " + ((pageNo - 1) * pageSize + (count == 0 ? 0:1))  + " - " + ((pageNo - 1) * pageSize + list.size()) /*(pageNo * pageSize)*/ + " 条，共 " + count + " 条" + (message!=null?message:""));
+        pagination.append("            ，第 <input type=\"text\" value=\""+pageNo+"\" onkeypress=\"var e=window.event||event;var c=e.keyCode||e.which;if(c==13)");
+        pagination.append(            funcName+"({pageNo:this.value,pageSize:"+pageSize+",funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\" onclick=\"this.select();\" class=\"form-control input-inline\" style=\"width:50px\"> 页，每页");
+        pagination.append("            <input type=\"text\" value=\""+pageSize+"\" onkeypress=\"var e=window.event||event;var c=e.keyCode||e.which;if(c==13)");
+        pagination.append(            funcName+"({pageNo:"+pageNo+",pageSize:this.value,funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\" onclick=\"this.select();\" class=\"form-control input-inline\" style=\"width:50px\"> 条");
+        pagination.append("        </label></div>");
         pagination.append("    </div>");
         pagination.append("    <div class=\"col-md-7 col-sm-7\">");
         pagination.append("        <div class=\"dataTables_paginate paging_bootstrap_full_number\">");
