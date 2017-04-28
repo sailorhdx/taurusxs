@@ -659,17 +659,26 @@ var Layout = function () {
 	                dataType: "html",
 	                success: function (res) {    
 	                    App.stopPageLoading();
-	                                    
-	                    for (var i = 0; i < ajaxContentSuccessCallbacks.length; i++) {
-	                        ajaxContentSuccessCallbacks[i].call(res);
-	                    }
-	
-	                    if (sidebarMenuLink != undefined && sidebarMenuLink != "" && sidebarMenuLink.size() > 0 && sidebarMenuLink.parents('li.open').size() === 0) {
-	                    	// edit by TaurusX,20170221, add 'sidebarMenuLink != undefined && sidebarMenuLink != "" && sidebarMenuLink.size() > 0 &&'
-	                        $('.page-sidebar-menu > li.open > a').click();
-	                    }
-	
-	                    pageContent.html(res);
+	                    if (res.indexOf("id=\"loginForm\"") != -1){
+							// Create timeout warning dialog
+	                    	sweetAlert({mess:'未登录或登录超时，请重新登录！', type:"warning", confirmButtonText:"重新登录", cancelButton:"false", callback: "reLogin"});
+							pageContent.html('<script type="text/javascript">\
+									function reLogin() {\
+										window.location = window.location.href;\
+									}\
+							  		</script>'); 
+						}  else {              
+		                    for (var i = 0; i < ajaxContentSuccessCallbacks.length; i++) {
+		                        ajaxContentSuccessCallbacks[i].call(res);
+		                    }
+		
+		                    if (sidebarMenuLink != undefined && sidebarMenuLink != "" && sidebarMenuLink.size() > 0 && sidebarMenuLink.parents('li.open').size() === 0) {
+		                    	// edit by TaurusX,20170221, add 'sidebarMenuLink != undefined && sidebarMenuLink != "" && sidebarMenuLink.size() > 0 &&'
+		                        $('.page-sidebar-menu > li.open > a').click();
+		                    }
+		
+		                    pageContent.html(res);
+						}
 	                    Layout.fixContentHeight(); // fix content height
 	                    App.initAjax(); // initialize core stuff
 	                },

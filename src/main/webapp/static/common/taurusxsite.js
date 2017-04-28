@@ -929,7 +929,7 @@ function confirmGetJson(param){
 		param.callbackParam["currentTime"] = (new Date()).toLocaleTimeString();
 	}
 	
-	return sweatAlert({mess:param.mess, type:"warning", callback: "ajaxGetJson", callbackParam:param});
+	return sweetAlert({mess:param.mess, type:"warning", callback: "ajaxGetJson", callbackParam:param});
 }
 
 /**
@@ -957,7 +957,7 @@ function confirmGetHtml(param){
 		param.callbackParam["currentTime"] = (new Date()).toLocaleTimeString();
 	}
 	
-	return sweatAlert({mess:param.mess, type:"warning", callback: "ajaxGetHtml", callbackParam:param});
+	return sweetAlert({mess:param.mess, type:"warning", callback: "ajaxGetHtml", callbackParam:param});
 }
 
 /**
@@ -982,7 +982,7 @@ function confirmPostJson(param){
 	
 	param.callbackParam["form"] = param.form;
 	
-	return sweatAlert({mess:param.mess, type:"warning", callback: "ajaxPostJson", callbackParam:param});
+	return sweetAlert({mess:param.mess, type:"warning", callback: "ajaxPostJson", callbackParam:param});
 }
 
 /**
@@ -1007,7 +1007,7 @@ function confirmPostHtml(param){
 	
 	param.callbackParam["form"] = param.form;
 	
-	return sweatAlert({mess:param.mess, type:"warning", callback: "ajaxPostHtml", callbackParam:param});
+	return sweetAlert({mess:param.mess, type:"warning", callback: "ajaxPostHtml", callbackParam:param});
 }
 
 /**
@@ -1020,10 +1020,12 @@ function confirmPostHtml(param){
  * 				jsonParam:确认提交后的业务处理函数的json结构参数}
  * @returns 确认提交返回true,否则返回false
  */
-function sweatAlert(param){
+function sweetAlert(param){
 	var mess = param.mess;
 	var type = param.type;
 	var cancelButton = param.cancelButton;
+	var confirmButtonText = param.confirmButtonText;
+	var cancelButtonText = param.cancelButtonText;
 	var callback = param.callback;
 	var callbackParam = param.callbackParam;
 	
@@ -1037,10 +1039,20 @@ function sweatAlert(param){
 		type = "info";
 	}
 
-	if (isNullOrEmpty(cancelButton)) {
+	if (isNullOrEmpty(cancelButton) || cancelButton == "true" ) {
 		cancelButton = true;
+	} else {
+		cancelButton = false;
 	}
 	
+	if (isNullOrEmpty(confirmButtonText)) {
+		confirmButtonText = "确认";
+	}
+	
+	if (isNullOrEmpty(cancelButtonText)) {
+		cancelButtonText = "取消";
+	}
+		
 	var btnClass = "btn-info";
 	
 	if ('error' === type) {
@@ -1056,8 +1068,8 @@ function sweatAlert(param){
 	  	showConfirmButton: true,
 	  	showCancelButton: cancelButton,
 	  	confirmButtonClass: btnClass,
-	  	confirmButtonText: "确认",
-	  	cancelButtonText: "取消",
+	  	confirmButtonText: confirmButtonText,
+	  	cancelButtonText: cancelButtonText,
 	  	closeOnConfirm: true 
 	},
 	function(isConfirm) {
