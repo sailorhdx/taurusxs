@@ -246,16 +246,18 @@ public class Page<T> {
 				begin = first;
 			}
 		}
-
-		if (begin > first) {
-			int i = 0;
-			for (i = first; i < first + slider && i < begin; i++) {
-				pager.append("<li><a href=\"javascript:;\" onclick=\""+funcName+"({pageNo:"+i+",pageSize:"+pageSize+",funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\">"
-						+ (i + 1 - first) + "</a></li>");
-			}
-			if (i < begin) {
-				pager.append("<li class=\"disabled\"><a href=\"javascript:;\">...</a></li>");
-			}
+		
+		if (Global.FALSE.equals(Global.getConfig("page.pagerCrurrentOnly"))){
+    		if (begin > first) {
+    			int i = 0;
+    			for (i = first; i < first + slider && i < begin; i++) {
+    				pager.append("<li><a href=\"javascript:;\" onclick=\""+funcName+"({pageNo:"+i+",pageSize:"+pageSize+",funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\">"
+    						+ (i + 1 - first) + "</a></li>");
+    			}
+    			if (i < begin) {
+    				pager.append("<li class=\"disabled\"><a href=\"javascript:;\">...</a></li>");
+    			}
+    		}
 		}
 
 		for (int i = begin; i <= end; i++) {
@@ -268,16 +270,18 @@ public class Page<T> {
 			}
 		}
 
-		if (last - end > slider) {
-			pager.append("<li class=\"disabled\"><a href=\"javascript:;\">...</a></li>");
-			end = last - slider;
+		if (Global.FALSE.equals(Global.getConfig("page.pagerCrurrentOnly"))){
+    		if (last - end > slider) {
+    			pager.append("<li class=\"disabled\"><a href=\"javascript:;\">...</a></li>");
+    			end = last - slider;
+    		}
+    
+    		for (int i = end + 1; i <= last; i++) {
+    			pager.append("<li><a href=\"javascript:;\" onclick=\""+funcName+"({pageNo:"+i+",pageSize:"+pageSize+",funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\">"
+    					+ (i + 1 - first) + "</a></li>");
+    		}
 		}
-
-		for (int i = end + 1; i <= last; i++) {
-			pager.append("<li><a href=\"javascript:;\" onclick=\""+funcName+"({pageNo:"+i+",pageSize:"+pageSize+",funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\">"
-					+ (i + 1 - first) + "</a></li>");
-		}
-
+		
 		if (pageNo == last) {
 		    if (Global.TRUE.equals(Global.getConfig("page.showPreNext"))){
 		         pager.append("<li class=\"next disabled\"><a href=\"javascript:;\" title=\"Next\"><i class=\"fa fa-angle-right\"></i></a></li>");       
@@ -299,11 +303,17 @@ public class Page<T> {
 		//pagination.append("<div class=\"row\">");
 		pagination.append("    <div class=\"col-md-5 col-sm-5\">");
         pagination.append("        <div class=\"dataTables_info\" role=\"status\" aria-live=\"polite\"><label>");
-        pagination.append("            第 " + ((pageNo - 1) * pageSize + (count == 0 ? 0:1))  + " - " + ((pageNo - 1) * pageSize + list.size()) /*(pageNo * pageSize)*/ + " 条，共 " + count + " 条" + (message!=null?message:""));
-        pagination.append("            ，第 <input type=\"text\" value=\""+pageNo+"\" onkeypress=\"var e=window.event||event;var c=e.keyCode||e.which;if(c==13)");
-        pagination.append(            funcName+"({pageNo:this.value,pageSize:"+pageSize+",funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\" onclick=\"this.select();\" class=\"form-control input-inline\" style=\"width:50px\"> 页，每页");
-        pagination.append("            <input type=\"text\" value=\""+pageSize+"\" onkeypress=\"var e=window.event||event;var c=e.keyCode||e.which;if(c==13)");
-        pagination.append(            funcName+"({pageNo:"+pageNo+",pageSize:this.value,funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\" onclick=\"this.select();\" class=\"form-control input-inline\" style=\"width:50px\"> 条");
+        if (Global.TRUE.equals(Global.getConfig("page.pageItemInfo"))){
+            pagination.append("            第 " + ((pageNo - 1) * pageSize + (count == 0 ? 0:1))  + " - " + ((pageNo - 1) * pageSize + list.size()) /*(pageNo * pageSize)*/ + " 条，共 " + count + " 条 " + (message!=null?message:""));
+        }
+        if (Global.TRUE.equals(Global.getConfig("page.pageNoInput"))){
+            pagination.append("             第 <input type=\"text\" value=\""+pageNo+"\" onkeypress=\"var e=window.event||event;var c=e.keyCode||e.which;if(c==13)");
+            pagination.append(            funcName+"({pageNo:this.value,pageSize:"+pageSize+",funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\" onclick=\"this.select();\" class=\"form-control input-inline\" style=\"width:50px\"> 页 ");
+        }
+        if (Global.TRUE.equals(Global.getConfig("page.pageSizeInput"))){
+            pagination.append("            每页 <input type=\"text\" value=\""+pageSize+"\" onkeypress=\"var e=window.event||event;var c=e.keyCode||e.which;if(c==13)");
+            pagination.append(            funcName+"({pageNo:"+pageNo+",pageSize:this.value,funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\" onclick=\"this.select();\" class=\"form-control input-inline\" style=\"width:50px\"> 条");
+        }
         pagination.append("        </label></div>");
         pagination.append("    </div>");
         pagination.append("    <div class=\"col-md-7 col-sm-7\">");
