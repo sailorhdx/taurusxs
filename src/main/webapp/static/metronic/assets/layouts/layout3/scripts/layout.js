@@ -284,6 +284,10 @@ var Layout = function () {
 
         getLayoutCssPath: function() {
             return App.getAssetsPath() + layoutCssPath;
+        },
+        
+        fixContentHeight: function () {
+        
         }
     };
 

@@ -152,8 +152,9 @@ public class FrontController extends BaseController{
 				// 获取内容列表
 				if ("article".equals(category.getModule())){
 					Page<Article> page = new Page<Article>(pageNo, pageSize);
-					//System.out.println(page.getPageNo());
+					page.setFuncName("pageDirect");
 					page = articleService.findPage(page, new Article(category), false);
+				
 					model.addAttribute("page", page);
 					// 如果第一个子栏目为简介类栏目，则获取该栏目第一篇文章
 					if ("2".equals(category.getShowModes())){

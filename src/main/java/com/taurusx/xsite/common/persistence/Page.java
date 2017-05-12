@@ -307,11 +307,11 @@ public class Page<T> {
             pagination.append("            第 " + ((pageNo - 1) * pageSize + (count == 0 ? 0:1))  + " - " + ((pageNo - 1) * pageSize + list.size()) /*(pageNo * pageSize)*/ + " 条，共 " + count + " 条 " + (message!=null?message:""));
         }
         if (Global.TRUE.equals(Global.getConfig("page.pageNoInput"))){
-            pagination.append("             第 <input type=\"text\" value=\""+pageNo+"\" onkeypress=\"var e=window.event||event;var c=e.keyCode||e.which;if(c==13)");
+            pagination.append("             第 <input id=\"iPageNo\" type=\"text\" value=\""+pageNo+"\" onkeypress=\"var e=window.event||event;var c=e.keyCode||e.which;if(c==13)");
             pagination.append(            funcName+"({pageNo:this.value,pageSize:"+pageSize+",funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\" onclick=\"this.select();\" class=\"form-control input-inline\" style=\"width:50px\"> 页 ");
         }
         if (Global.TRUE.equals(Global.getConfig("page.pageSizeInput"))){
-            pagination.append("            每页 <input type=\"text\" value=\""+pageSize+"\" onkeypress=\"var e=window.event||event;var c=e.keyCode||e.which;if(c==13)");
+            pagination.append("            每页 <input id=\"iPageSize\" type=\"text\" value=\""+pageSize+"\" onkeypress=\"var e=window.event||event;var c=e.keyCode||e.which;if(c==13)");
             pagination.append(            funcName+"({pageNo:"+pageNo+",pageSize:this.value,funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\" onclick=\"this.select();\" class=\"form-control input-inline\" style=\"width:50px\"> 条");
         }
         pagination.append("        </label></div>");

@@ -1460,6 +1460,7 @@ var ajaxPostHtml = function(param) {
         dataType: "html",
         data: $(form).serialize(),
         success: function (res) {    
+        	console.log(res);
             App.stopPageLoading();
             if (!isNullOrEmpty(param.callback)) {
             	if (isNullOrEmpty(param.callbackParam)) {

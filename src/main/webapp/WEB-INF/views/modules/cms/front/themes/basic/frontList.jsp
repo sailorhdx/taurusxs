@@ -43,7 +43,7 @@
                  <div class="mt-list-container list-simple">
                      <ul>
 						<c:if test="${category.module eq 'article'}">
-			    			<c:forEach items="${fnc:getArticleList(site.id, tpl.id, 5, '')}" var="article">
+			    			<c:forEach items="${page.list}" var="article">
 								<li class="mt-list-item">
 									<div class="list-icon-container done">
 		                                   <i class="icon-check"></i>
@@ -80,8 +80,16 @@
             		<div class="row">${page}</div>
             	</div>
 				<script type="text/javascript">
-					function page(n,s){
-						location="${ctxFront}/list-${category.id}${urlSuffix}?pageNo="+n+"&pageSize="+s;
+					//function page(n,s){
+					//	location="${ctxFront}/list-${category.id}${urlSuffix}?pageNo="+n+"&pageSize="+s;
+					//}
+					
+					function pageDirect(param){
+						console.log("111111111111");
+						console.log(param);
+						console.log(param.pageNo);
+						location="${ctxFront}/list-${category.id}${urlSuffix}?pageNo="+ param.pageNo +"&pageSize="+  param.pageSize;
+						//ajaxPostHtml({form:formId, callback:"defaultPostHtmlCallback", callbackParam: param});
 					}
 				</script>
              </c:if>
