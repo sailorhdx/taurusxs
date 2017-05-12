@@ -265,8 +265,10 @@ public class Page<T> {
 				pager.append("<li class=\"active\"><a href=\"javascript:;\">" + (i + 1 - first)
 						+ "</a></li>");
 			} else {
-				pager.append("<li><a href=\"javascript:;\" onclick=\""+funcName+"({pageNo:"+i+",pageSize:"+pageSize+",funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\">"
-						+ (i + 1 - first) + "</a></li>");
+			    if (Global.FALSE.equals(Global.getConfig("page.pagerCurrentOnly"))){
+    				pager.append("<li><a href=\"javascript:;\" onclick=\""+funcName+"({pageNo:"+i+",pageSize:"+pageSize+",funcParam:" + (StringUtils.isEmpty(funcParam) ? "''" : funcParam) + "});\">"
+    						+ (i + 1 - first) + "</a></li>");
+			    }
 			}
 		}
 
