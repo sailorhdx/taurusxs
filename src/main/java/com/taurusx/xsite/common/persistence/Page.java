@@ -247,7 +247,7 @@ public class Page<T> {
 			}
 		}
 		
-		if (Global.FALSE.equals(Global.getConfig("page.pagerCrurrentOnly"))){
+		if (Global.FALSE.equals(Global.getConfig("page.pagerCurrentOnly"))){
     		if (begin > first) {
     			int i = 0;
     			for (i = first; i < first + slider && i < begin; i++) {
@@ -270,7 +270,7 @@ public class Page<T> {
 			}
 		}
 
-		if (Global.FALSE.equals(Global.getConfig("page.pagerCrurrentOnly"))){
+		if (Global.FALSE.equals(Global.getConfig("page.pagerCurrentOnly"))){
     		if (last - end > slider) {
     			pager.append("<li class=\"disabled\"><a href=\"javascript:;\">...</a></li>");
     			end = last - slider;
