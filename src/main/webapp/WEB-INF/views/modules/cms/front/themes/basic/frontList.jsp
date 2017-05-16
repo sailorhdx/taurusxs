@@ -77,7 +77,7 @@
              </div>
              <c:if test="${category.module eq 'article'}">
              	<div class="dataTables_wrapper">
-            		<div class="row">${page}</div>
+            		<div class="row">${page.optString}</div>
             	</div>
 				<script type="text/javascript">
 					//function page(n,s){
