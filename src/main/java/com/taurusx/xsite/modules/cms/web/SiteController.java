@@ -23,6 +23,7 @@ import com.taurusx.xsite.common.utils.StringUtils;
 import com.taurusx.xsite.common.web.BaseController;
 import com.taurusx.xsite.modules.cms.entity.Site;
 import com.taurusx.xsite.modules.cms.service.SiteService;
+import com.taurusx.xsite.modules.sys.service.OfficeService;
 import com.taurusx.xsite.modules.sys.utils.UserUtils;
 
 /**
@@ -37,6 +38,9 @@ public class SiteController extends BaseController {
 	@Autowired
 	private SiteService siteService;
 	
+	@Autowired
+	private OfficeService officeService;
+	   
 	@ModelAttribute
 	public Site get(@RequestParam(required=false) String id) {
 		if (StringUtils.isNotBlank(id)){
@@ -66,6 +70,7 @@ public class SiteController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Site site, Model model) {
 		model.addAttribute("site", site);
+		model.addAttribute("userList", officeService.findAll());
 		return "modules/cms/siteForm";
 	}
 
@@ -114,6 +119,7 @@ public class SiteController extends BaseController {
 	public String select(String id, boolean flag, HttpServletResponse response){
 		if (id!=null){
 			UserUtils.putCache("siteId", id);
+			siteService.updateSiteUser(id);
 			// 保存到Cookie中，下次登录后自动切换到该站点
 			CookieUtils.setCookie(response, "siteId", id);
 		}

@@ -12,5 +12,13 @@ import com.taurusx.xsite.modules.cms.entity.Site;
  */
 @MyBatisDao
 public interface SiteDao extends CrudDao<Site> {
+    
+    public int deleteSiteUser(Site site);
+
+    public int insertSiteUser(Site site);
+    
+    public int disableSiteUser(String userId);
+    
+    public int enableSiteUser(String siteaId, String userId);
 
 }

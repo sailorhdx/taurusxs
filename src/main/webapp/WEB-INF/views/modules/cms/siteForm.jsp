@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-
+	
+	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
+	
 	<!-- BEGIN PORTLET-->
    	<div class="portlet light">
         <div class="portlet-title">
@@ -75,6 +77,13 @@
 					</div>
 				</div>
 				<div class="form-group">
+						<label class="control-label col-md-4">管理用户:</label>
+						<div class="col-md-6">
+							<sys:treeselect id="userIds" name="userIds" value="${site.userIds}" labelName="site.userNames" labelValue="${site.userNames}"
+								title="用户" url="/sys/office/treeData?type=3" allowClear="true" checked="true" notAllowSelectParent="true"/>
+						</div>
+					</div>
+				<div class="form-group">
 	               	<div class="col-md-offset-4 col-md-6">
 	               		<input id="btnCancel" class="btn default" type="button" value="返回" onclick="locationHref('${ctxAdmin}/cms/site');"/>
 						<shiro:hasPermission name="cms:site:edit">
@@ -89,7 +98,9 @@
     <!-- BEGIN PORTLET-->	
     
 	<script type="text/javascript">
+	
 		$(document).ready(function() {
+			
 			$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
@@ -99,6 +110,7 @@
 			
 			// 初始化Select2控件
 			ComponentsSelect2.init();
+			
 		});
 		
 		function CKupdate(){

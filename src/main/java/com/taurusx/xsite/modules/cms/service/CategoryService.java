@@ -76,9 +76,10 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 		
 		if (isCurrentSite){
 			List<Category> categoryList = Lists.newArrayList(); 
+			String currentSiteId = Site.getCurrentSiteId();
 			for (Category e : list){
 				if (Category.isRoot(e.getId()) || (e.getSite()!=null && e.getSite().getId() !=null 
-						&& e.getSite().getId().equals(Site.getCurrentSiteId()))){
+						&& e.getSite().getId().equals(currentSiteId))){
 					if (StringUtils.isNotEmpty(module)){
 						if (module.equals(e.getModule()) || "".equals(e.getModule())){
 							categoryList.add(e);

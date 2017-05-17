@@ -108,6 +108,9 @@
 		
 		function searchCallback(param) {
             var item = param.item;
+            var userIds = "," + item.userIds + ",";
+            console.log(userIds);
+            console.log(item.currentUser);
    			$("#pageTableList").append(Mustache.render(param.tpl, {
                	row: item,
                	abbr: {

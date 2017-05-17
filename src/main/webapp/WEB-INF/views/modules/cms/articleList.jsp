@@ -30,7 +30,7 @@
 							<label class="control-label col-md-4">栏目</label>
 							<div class="col-md-8">
 								<sys:treeselect id="category" name="category.id" value="${article.category.id}" labelName="category.name" labelValue="${article.category.name}"
-									title="栏目" url="/cms/category/treeData" module="article" notAllowSelectRoot="false" allowClear="true"/>
+									title="栏目" url="/cms/category/treeData" module="article" notAllowSelectRoot="false" allowClear="true"  cssClass="required"/>
 							</div>
 						</div>
 						<div class="form-group col-md-6">
@@ -111,6 +111,9 @@
 			$("#searchForm").validate({
 				submitHandler: function(form){
 					searchPostJson({funcParam:{callback:"searchCallback"}});
+				},
+				errorPlacement: function(error, element) {
+					jqueryValidateErrorPlacement(error, element);
 				}
 			});
 			
@@ -118,7 +121,7 @@
 			ComponentsBootstrapMultiselect.init();			
 			
 			// 页面打开初始化执行查询操作
-			$("#searchForm").submit();
+			//$("#searchForm").submit();
 		});
 		
 		// 提交查询表单回调方法

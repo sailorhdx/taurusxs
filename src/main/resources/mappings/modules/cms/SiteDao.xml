@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.taurusx.xsite.modules.cms.dao.SiteDao">
     
+    <resultMap id="siteResult" type="Site">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="title" column="title" />
+		<result property="logo" column="logo" />
+		<result property="domain" column="domain" />
+		<result property="description" column="description" />
+		<result property="keywords" column="keywords" />
+		<result property="theme" column="theme" />
+		<result property="copyright" column="copyright" />
+		<result property="customIndexView" column="customIndexView" />
+		<result property="remarks" column="remarks" />
+		<result property="isDefault" column="isDefault" />
+		<collection property="userList" ofType="User">
+			<id property="id" column="userList.id" />
+			<id property="name" column="userList.name" />
+		</collection>
+	</resultMap>
+	
 	<sql id="cmsSiteColumns">
 		a.id AS "id",
 		a.name AS "name",
@@ -24,19 +43,27 @@
 	<sql id="cmsSiteJoins">
 	</sql>
     
-	<select id="get" resultType="Site">
+	<select id="get" resultMap="siteResult">
 		SELECT 
-			<include refid="cmsSiteColumns"/>
+			<include refid="cmsSiteColumns"/>,
+			su.user_id AS "userList.id",
+			u.name AS "userList.name",
+			su.is_default AS "isDefault"
 		FROM cms_site a
 		<include refid="cmsSiteJoins"/>
+		LEFT JOIN cms_site_user su ON su.site_id = a.id
+		LEFT JOIN sys_user u ON u.id = su.user_id
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="Site">
+	<select id="findList" resultMap="siteResult">
 		SELECT 
-			<include refid="cmsSiteColumns"/>
+			<include refid="cmsSiteColumns"/>,
+			su.user_id AS "userList.id",
+			su.is_default AS "isDefault"
 		FROM cms_site a
 		<include refid="cmsSiteJoins"/>
+		LEFT JOIN cms_site_user su ON su.site_id = a.id
 		<where>
 			a.del_flag = #{delFlag}
 			<if test="name != null and name != ''">
@@ -45,6 +72,8 @@
 					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{name}, '%')</if>
 			</if>
+			<!-- 数据范围过滤 -->
+			${sqlMap.dsf}
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -56,11 +85,14 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="Site">
+	<select id="findAllList" resultMap="siteResult">
 		SELECT 
-			<include refid="cmsSiteColumns"/>
+			<include refid="cmsSiteColumns"/>,
+			su.user_id AS "userList.id",
+			su.is_default AS "isDefault"
 		FROM cms_site a
 		<include refid="cmsSiteJoins"/>
+		LEFT JOIN cms_site_user su ON su.site_id = a.id
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 		</where>		
@@ -136,4 +168,30 @@
 		WHERE id = #{id}
 	</update>
 	
+	<delete id="deleteSiteUser">
+		DELETE FROM cms_site_user WHERE site_id = #{id}
+	</delete>
+	
+	<insert id="insertSiteUser">
+		INSERT INTO cms_site_user(site_id, user_id)
+		<foreach collection="userList" item="user" separator=" union all ">
+			SELECT #{id}, #{user.id}
+			<if test="dbName != 'mssql'">
+			FROM dual
+			</if>
+		</foreach>
+	</insert>
+	
+	<update id="disableSiteUser" parameterType="String">
+		UPDATE cms_site_user SET 
+			is_Default = '0'
+		WHERE user_id = #{arg0}
+	</update>
+	
+	<update id="enableSiteUser" parameterType="String">
+		UPDATE cms_site_user SET 
+			is_Default = '1'
+		WHERE site_id = #{arg0}
+		AND user_id = #{arg1}
+	</update>
 </mapper>

@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
+import org.springframework.ui.Model;
+
 import com.google.common.collect.Lists;
 import com.taurusx.xsite.common.config.Global;
 import com.taurusx.xsite.common.mapper.JsonMapper;
@@ -20,10 +24,7 @@ import com.taurusx.xsite.modules.cms.service.ArticleService;
 import com.taurusx.xsite.modules.cms.service.CategoryService;
 import com.taurusx.xsite.modules.cms.service.LinkService;
 import com.taurusx.xsite.modules.cms.service.SiteService;
-
-import javax.servlet.ServletContext;
-
-import org.springframework.ui.Model;
+import com.taurusx.xsite.modules.sys.utils.UserUtils;
 
 /**
  * 内容管理工具类
@@ -71,6 +72,15 @@ public class CmsUtils {
 		}
 		return new Site(id);
 	}
+	
+	/**
+     * 获得当前用户默认站点
+     */
+    public static Site getDefaultSite(){
+        Site site = siteService.getDefaultSite();
+        UserUtils.putCache("siteId", site.getId());
+        return site;
+    }
 	
 	/**
 	 * 获得主导航列表

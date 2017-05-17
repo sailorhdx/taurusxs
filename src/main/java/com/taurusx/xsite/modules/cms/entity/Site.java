@@ -1,10 +1,15 @@
 
 package com.taurusx.xsite.modules.cms.entity;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
+import com.google.common.collect.Lists;
 import com.taurusx.xsite.common.persistence.DataEntity;
+import com.taurusx.xsite.modules.cms.utils.CmsUtils;
+import com.taurusx.xsite.modules.sys.entity.User;
 import com.taurusx.xsite.modules.sys.utils.UserUtils;
 
 /**
@@ -24,7 +29,10 @@ public class Site extends DataEntity<Site> {
 	private String copyright;// 版权信息
 	private String customIndexView;// 自定义首页视图文件
 	private String domain;
+	private String isDefault; //是否默认站点
 
+	private List<User> userList = Lists.newArrayList();    // 站点管理用户列表
+	
 	public Site() {
 		super();
 	}
@@ -107,7 +115,14 @@ public class Site extends DataEntity<Site> {
 	 * 获取默认站点ID
 	 */
 	public static String defaultSiteId(){
-		return "1";
+	    
+	    if (UserUtils.getUser().isAdmin()) {
+	        return "1";    
+	    } else {
+	        Site site = CmsUtils.getDefaultSite();
+	        return site.getId();
+	    }
+		
 	}
 	
 	/**
@@ -146,5 +161,62 @@ public class Site extends DataEntity<Site> {
 	public void setDomain(String domain) {
 		this.domain = domain;
 	}
+
 	
+    public String getUserIds() {
+        return StringUtils.join(getUserIdList(), ",");
+    }
+
+    public String getUserNames() {
+        return StringUtils.join(getUserNameList(), ",");
+    }
+    
+    public void setUserIds(String userIds) {
+        userList = Lists.newArrayList();
+        if (userIds != null){
+            String[] ids = StringUtils.split(userIds, ",");
+            setUserIdList(Lists.newArrayList(ids));
+        }
+    }
+    
+    public List<String> getUserIdList() {
+        List<String> userIdList = Lists.newArrayList();
+        for (User user : userList) {
+            userIdList.add(user.getId());
+        }
+        return userIdList;
+    }
+
+    public List<String> getUserNameList() {
+        List<String> userNameList = Lists.newArrayList();
+        for (User user : userList) {
+            userNameList.add(user.getName());
+        }
+        return userNameList;
+    }
+    
+    public void setUserIdList(List<String> userIdList) {
+        userList = Lists.newArrayList();
+        for (String userId : userIdList) {
+            User user = new User();
+            user.setId(userId);
+            userList.add(user);
+        }
+    }
+    
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
+    public String getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(String isDefault) {
+        this.isDefault = isDefault;
+    }
 }
