@@ -116,12 +116,12 @@ public class Site extends DataEntity<Site> {
 	 */
 	public static String defaultSiteId(){
 	    
-	    if (UserUtils.getUser().isAdmin()) {
-	        return "1";    
-	    } else {
+	    //if (UserUtils.getUser().isAdmin()) {
+	    //    return "1";    
+	    //} else {
 	        Site site = CmsUtils.getDefaultSite();
 	        return site.getId();
-	    }
+	    //}
 		
 	}
 	

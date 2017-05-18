@@ -58,12 +58,11 @@
 	
 	<select id="findList" resultMap="siteResult">
 		SELECT 
-			<include refid="cmsSiteColumns"/>,
-			su.user_id AS "userList.id",
-			su.is_default AS "isDefault"
+			<include refid="cmsSiteColumns"/>
+			${sqlMap.select}
 		FROM cms_site a
 		<include refid="cmsSiteJoins"/>
-		LEFT JOIN cms_site_user su ON su.site_id = a.id
+		${sqlMap.from}
 		<where>
 			a.del_flag = #{delFlag}
 			<if test="name != null and name != ''">
