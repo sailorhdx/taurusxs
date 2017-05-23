@@ -7,6 +7,7 @@ DROP TABLE cms_comment;
 DROP TABLE cms_guestbook;
 DROP TABLE cms_link;
 DROP TABLE cms_site;
+DROP TABLE cms_site_user;
 /* Create Tables */
 
 CREATE TABLE cms_article
@@ -157,6 +158,12 @@ CREATE TABLE cms_site
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE cms_site_user (
+  site_id varchar(64) NOT NULL,
+  user_id varchar(64) NOT NULL,
+  is_default char(1) DEFAULT '0',
+  PRIMARY KEY (site_id,user_id)
+);
 
 
 /* Create Indexes */

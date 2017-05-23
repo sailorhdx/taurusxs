@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS cms_comment;
 DROP TABLE IF EXISTS cms_guestbook;
 DROP TABLE IF EXISTS cms_link;
 DROP TABLE IF EXISTS cms_site;
+DROP TABLE IF EXISTS cms_site_user;
 /* Create Tables */
 
 CREATE TABLE cms_article
@@ -157,7 +158,12 @@ CREATE TABLE cms_site
 	PRIMARY KEY (id)
 ) COMMENT = '站点表';
 
-
+CREATE TABLE `cms_site_user` (
+  `site_id` varchar(64) NOT NULL COMMENT '站点编号',
+  `user_id` varchar(64) NOT NULL COMMENT '用户编号',
+  `is_default` char(1) DEFAULT '0' COMMENT '是否是默认站点',
+  PRIMARY KEY (`site_id`,`user_id`)
+) COMMENT='站点-用户';
 
 /* Create Indexes */
 

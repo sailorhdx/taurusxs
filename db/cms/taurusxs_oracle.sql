@@ -8,7 +8,7 @@ DROP TABLE cms_link;
 DROP TABLE cms_category;
 DROP TABLE cms_guestbook;
 DROP TABLE cms_site;
-
+DROP TABLE cms_site_user;
 
 
 
@@ -160,6 +160,13 @@ CREATE TABLE cms_site
 	remarks varchar2(255),
 	del_flag char(1) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (id)
+);
+
+CREATE TABLE cms_site_user (
+  site_id varchar2(64) NOT NULL,
+  user_id varchar2(64) NOT NULL,
+  is_default char(1) DEFAULT '0',
+  PRIMARY KEY (site_id,user_id)
 );
 
 
