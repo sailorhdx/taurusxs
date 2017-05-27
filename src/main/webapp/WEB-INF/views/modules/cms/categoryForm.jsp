@@ -56,6 +56,14 @@
 						<sys:ckfinder input="image" type="thumb" uploadPath="/cms/category"/>
 					</div>
 				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-md-4">字体图标:</label>
+					<div class="col-md-6">
+						<form:input path="fonticon" htmlEscape="false" maxlength="255"/>
+					</div>
+				</div>
+				
 				<div class="form-group">
 					<label class="control-label col-md-4">链接</label>
 					<div class="col-md-6">

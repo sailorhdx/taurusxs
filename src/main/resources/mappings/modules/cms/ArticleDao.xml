@@ -49,6 +49,8 @@
 		<include refid="cmsArticleJoins"/>
 		<where>
 			a.del_flag = #{delFlag}
+			<!-- Fix Hato 2017/4/5 解决焦点图获取时不需要指定 栏目ID-->
+			and c.site_id=#{category.site.id}
 			<if test="title != null and title != ''">
 				AND a.title LIKE 
 					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>

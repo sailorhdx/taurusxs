@@ -920,6 +920,10 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		if (path != null && path.startsWith("/")){
 			p = "/" + p; // linux下路径
 		}
+		//fix by hatosoft 
+		if(path.startsWith("/")){
+            p = "/" + p;
+        }
 		return p;
 	}
 	

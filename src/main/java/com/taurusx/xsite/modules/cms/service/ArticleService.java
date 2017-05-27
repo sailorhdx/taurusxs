@@ -23,6 +23,7 @@ import com.taurusx.xsite.modules.cms.dao.CategoryDao;
 import com.taurusx.xsite.modules.cms.entity.Article;
 import com.taurusx.xsite.modules.cms.entity.ArticleData;
 import com.taurusx.xsite.modules.cms.entity.Category;
+import com.taurusx.xsite.modules.cms.entity.Site;
 import com.taurusx.xsite.modules.sys.utils.UserUtils;
 
 /**
@@ -61,7 +62,14 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 			article.setCategory(category);
 		}
 		else{
-			article.setCategory(new Category());
+			//Fix Hato 2017/4/5 解决焦点图获取时不需要指定 栏目ID
+			if(article.getCategory()!=null){
+				if(article.getCategory().getSite()!=null){
+					article.setCategory(new Category(null,new Site(article.getCategory().getSite().getId())));
+				}
+			}else{
+				article.setCategory(new Category());
+			}
 		}
 //		if (StringUtils.isBlank(page.getOrderBy())){
 //			page.setOrderBy("a.weight,a.update_date desc");

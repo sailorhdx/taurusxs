@@ -58,6 +58,7 @@ CREATE TABLE cms_category
 	module varchar(20),
 	name varchar(100) NOT NULL,
 	image varchar(255),
+	fonticon varchar(255),
 	href varchar(255),
 	target varchar(20),
 	description varchar(255),

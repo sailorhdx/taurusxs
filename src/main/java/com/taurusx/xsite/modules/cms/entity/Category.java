@@ -29,6 +29,7 @@ public class Category extends TreeEntity<Category> {
 	private String module; 	// 栏目模型（article：文章；picture：图片；download：下载；link：链接；special：专题）
 //	private String name; 	// 栏目名称
 	private String image; 	// 栏目图片
+	private String fonticon; 	// 栏目字体图标
 	private String href; 	// 链接
 	private String target; 	// 目标（ _blank、_self、_parent、_top）
 	private String description; 	// 描述，填写有助于搜索引擎优化
@@ -324,4 +325,11 @@ public class Category extends TreeEntity<Category> {
    	public String getUrl() {
         return CmsUtils.getUrlDynamic(this);
    	}
+	public String getFonticon() {
+		return fonticon;
+	}
+
+	public void setFonticon(String fonticon) {
+		this.fonticon = fonticon;
+	}
 }

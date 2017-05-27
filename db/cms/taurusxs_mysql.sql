@@ -18,6 +18,7 @@ CREATE TABLE cms_article
 	link varchar(255) COMMENT '文章链接',
 	color varchar(50) COMMENT '标题颜色',
 	image varchar(255) COMMENT '文章图片',
+	fonticon varchar(255) COMMENT '字体图标',
 	keywords varchar(255) COMMENT '关键字',
 	description varchar(255) COMMENT '描述、摘要',
 	weight int DEFAULT 0 COMMENT '权重，越大越靠前',
