@@ -4,6 +4,10 @@ body {
     font-family: "Helvetica Neue",Helvetica,"微软雅黑", Arial,sans-serif;
 }
 
+.page-header.navbar .page-logo .logo-default {
+    margin: 5px 0 0 -20px;
+}
+
 /***
 Error Pages
 ***/

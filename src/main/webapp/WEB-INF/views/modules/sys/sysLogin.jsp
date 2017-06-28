@@ -50,14 +50,13 @@
         <!-- BEGIN LOGO -->
         <div class="logo">
             <a href="${ctxAdmin}">
-                <img src="${layoutAssetsPath}/img/logo-big.png" alt="" /> </a>
+                <img src="${layoutAssetsPath}/img/manage_login_logo200X120_site.png" alt="" /> </a>
         </div>
         <!-- END LOGO -->
         <!-- BEGIN LOGIN -->
         <div class="content">
             <!-- BEGIN LOGIN FORM -->
             <form id="loginForm" class="login-form" action="${ctxAdmin}/login" method="post">
-                <h3 class="form-title font-green">登录</h3>
                 <h3 class="form-title font-green">${fns:getConfig('productName')}</h3>
                 <div id="messageBox" class="alert alert-danger ${empty message ? 'hide' : ''}">
                 	<button class="close" data-close="alert"></button>

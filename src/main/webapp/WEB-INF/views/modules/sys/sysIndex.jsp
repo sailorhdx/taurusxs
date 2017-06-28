@@ -93,7 +93,7 @@
                     <!-- BEGIN LOGO -->
                     <div class="page-logo">
                         <a href="${ctxAdmin}">
-                            <img src="${layoutAssetsPath}/img/logo.png" alt="logo" class="logo-default" /> 
+                            <img src="${layoutAssetsPath}/img/manage_logo180X38_site.png" alt="logo" class="logo-default" /> 
                         </a>
                         
                         <div class="menu-toggler sidebar-toggler">

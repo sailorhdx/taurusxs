@@ -58,9 +58,12 @@
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label col-md-4">字体图标:</label>
+					<label class="control-label col-md-4">字体图标</label>
 					<div class="col-md-6">
+						<!-- 
 						<form:input path="fonticon" htmlEscape="false" maxlength="255"/>
+						 -->
+						<sys:iconselect id="fonticon" name="fonticon" value="${category.fonticon}"/>
 					</div>
 				</div>
 				
