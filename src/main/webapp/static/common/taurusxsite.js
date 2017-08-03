@@ -929,7 +929,7 @@ function confirmGetJson(param){
 		param.callbackParam["currentTime"] = (new Date()).toLocaleTimeString();
 	}
 	
-	return sweetAlert({mess:param.mess, type:"warning", callback: "ajaxGetJson", callbackParam:param});
+	return sweetAlertBootstrap({mess:param.mess, type:"warning", callback: "ajaxGetJson", callbackParam:param});
 }
 
 /**
@@ -957,7 +957,7 @@ function confirmGetHtml(param){
 		param.callbackParam["currentTime"] = (new Date()).toLocaleTimeString();
 	}
 	
-	return sweetAlert({mess:param.mess, type:"warning", callback: "ajaxGetHtml", callbackParam:param});
+	return sweetAlertBootstrap({mess:param.mess, type:"warning", callback: "ajaxGetHtml", callbackParam:param});
 }
 
 /**
@@ -982,7 +982,7 @@ function confirmPostJson(param){
 	
 	param.callbackParam["form"] = param.form;
 	
-	return sweetAlert({mess:param.mess, type:"warning", callback: "ajaxPostJson", callbackParam:param});
+	return sweetAlertBootstrap({mess:param.mess, type:"warning", callback: "ajaxPostJson", callbackParam:param});
 }
 
 /**
@@ -1007,7 +1007,7 @@ function confirmPostHtml(param){
 	
 	param.callbackParam["form"] = param.form;
 	
-	return sweetAlert({mess:param.mess, type:"warning", callback: "ajaxPostHtml", callbackParam:param});
+	return sweetAlertBootstrap({mess:param.mess, type:"warning", callback: "ajaxPostHtml", callbackParam:param});
 }
 
 /**
@@ -1020,7 +1020,7 @@ function confirmPostHtml(param){
  * 				jsonParam:确认提交后的业务处理函数的json结构参数}
  * @returns 确认提交返回true,否则返回false
  */
-function sweetAlert(param){
+function sweetAlertBootstrap(param){
 	var mess = param.mess;
 	var type = param.type;
 	var cancelButton = param.cancelButton;
