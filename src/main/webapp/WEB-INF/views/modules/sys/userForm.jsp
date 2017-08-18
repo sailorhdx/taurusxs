@@ -26,7 +26,7 @@
 					<label class="control-label col-md-4">头像</label>
 					<div class="col-md-6">
 						<form:hidden id="nameImage" path="photo" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-						<sys:ckfinder input="nameImage" type="images" uploadPath="/photo" selectMultiple="false" maxWidth="100" maxHeight="100"/>
+						<sys:ckfinder input="nameImage" type="Images" uploadPath="/photo" selectMultiple="false" maxWidth="100" maxHeight="100"/>
 					</div>
 				</div>
 				<div class="form-group">

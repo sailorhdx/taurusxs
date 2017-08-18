@@ -921,9 +921,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			p = "/" + p; // linux下路径
 		}
 		//fix by hatosoft 
-		if(path.startsWith("/")){
-            p = "/" + p;
-        }
+		//if(path.startsWith("/")){  此段代码导致图片不能正常显示，路径前面出现//双斜杠
+        //    p = "/" + p;
+        //}
 		return p;
 	}
 	
