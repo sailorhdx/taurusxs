@@ -26,22 +26,22 @@
 	<defaultResourceTypes></defaultResourceTypes>
 	<types>
 		<type name="Files">
-			<url>%BASE_URL%files/</url>
-			<directory>%BASE_DIR%files</directory>
+			<url>%BASE_URL%Files/</url>
+			<directory>%BASE_DIR%Files</directory>
 			<maxSize>0</maxSize>
 			<allowedExtensions>7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip</allowedExtensions>
 			<deniedExtensions></deniedExtensions>
 		</type>
 		<type name="Images">
-			<url>%BASE_URL%images/</url>
-			<directory>%BASE_DIR%images</directory>
+			<url>%BASE_URL%Images/</url>
+			<directory>%BASE_DIR%Images</directory>
 			<maxSize>0</maxSize>
 			<allowedExtensions>bmp,gif,jpeg,jpg,png</allowedExtensions>
 			<deniedExtensions></deniedExtensions>
 		</type>
 		<type name="Flash">
-			<url>%BASE_URL%flash/</url>
-			<directory>%BASE_DIR%flash</directory>
+			<url>%BASE_URL%Flash/</url>
+			<directory>%BASE_DIR%Flash</directory>
 			<maxSize>0</maxSize>
 			<allowedExtensions>swf,flv</allowedExtensions>
 			<deniedExtensions></deniedExtensions>
