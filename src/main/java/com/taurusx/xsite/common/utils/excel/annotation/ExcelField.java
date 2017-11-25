@@ -46,6 +46,11 @@ public @interface ExcelField {
 	String dictType() default "";
 	
 	/**
+	 * 如果是字典类型，请设置字典的type值是id还是value
+	 */
+	String dictTypeBy() default "";
+	
+	/**
 	 * 反射类型
 	 */
 	Class<?> fieldType() default Class.class;
