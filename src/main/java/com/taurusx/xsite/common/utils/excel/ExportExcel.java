@@ -392,7 +392,11 @@ public class ExportExcel {
 					}
 					// If is dict, get dict label
 					if (StringUtils.isNotBlank(ef.dictType())){
-						val = DictUtils.getDictLabel(val==null?"":val.toString(), ef.dictType(), "");
+						if (StringUtils.isNotBlank(ef.dictTypeBy()) && "id".equalsIgnoreCase(ef.dictTypeBy())) {
+							val = DictUtils.getDictLabelById(val==null?"":val.toString(), ef.dictType(), "");
+						} else {
+							val = DictUtils.getDictLabel(val==null?"":val.toString(), ef.dictType(), "");
+						}
 					}
 				}catch(Exception ex) {
 					// Failure to ignore
